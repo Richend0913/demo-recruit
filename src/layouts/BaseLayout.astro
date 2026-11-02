@@ -1,0 +1,308 @@
+---
+import '../styles/global.css';
+import Phrases from '../components/Phrases.astro';
+import { recruitLpUrl } from '../data/content';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta property="og:title" content="軽貨物ドライバー募集（業務委託）｜コスモ軽貨物（採用LP制作デモ）" />
+    <meta
+      property="og:description"
+      content="「月◯万可能！」ではなく、経費を引いた後の収入目安をシミュレータで正直に開示する採用LPのデモです（架空の会社・数字はサンプル）。"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://richend0913.github.io/demo-recruit/" />
+    <meta property="og:image" content="https://richend0913.github.io/demo-recruit/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23e08a2b'/><text x='32' y='45' font-size='34' font-weight='900' text-anchor='middle' fill='%231a1206' font-family='sans-serif'>配</text></svg>"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-63VB4HT3T2"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-63VB4HT3T2');
+    </script>
+  </head>
+  <body>
+    <div class="demo-bar">
+      <span class="db-chunk">これは<strong>採用LP制作デモ</strong>です。</span><span class="db-chunk"
+        ><strong>架空の会社</strong>（実在しません）・</span
+      ><span class="db-chunk">数字はサンプル・</span><span class="db-chunk"
+        >制作：株式会社MIMORIA</span
+      >
+      <a
+        class="demo-bar-link"
+        href={recruitLpUrl}
+        onclick="gtag('event','generate_lead',{method:'demo'})"
+        >MIMORIA RECRUIT（採用支援）を見る</a
+      >
+    </div>
+
+    <header class="hdr">
+      <div class="container hdr-in">
+        <a class="brand" href="#top">コスモ軽貨物<span class="brand-sub">ドライバー募集</span></a>
+        <nav class="hdr-nav" aria-label="ページ内案内">
+          <a href="#terms">募集条件</a>
+          <a href="#sim">手取り試算</a>
+          <a href="#flow">応募の流れ</a>
+          <a href="#faq">よくある質問</a>
+        </nav>
+        <a
+          class="hdr-cta"
+          href="#apply"
+          onclick="gtag('event','generate_lead',{method:'apply'})">応募する</a
+        >
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="ft">
+      <div class="container">
+        <p class="ft-name">コスモ軽貨物（架空・採用LP制作デモ）｜業務委託ドライバー募集</p>
+        <p class="ft-note">
+          応募者の個人情報は、応募対応・選考の目的のみに利用します。／ 制作：株式会社MIMORIA
+        </p>
+        <div class="ft-cta">
+          <p class="ft-cta-title">
+            <Phrases text="こういう「応募が来る採用の仕組み」を自社に持てます" />
+          </p>
+          <a
+            class="btn btn--primary ft-cta-btn"
+            href={recruitLpUrl}
+            target="_blank"
+            rel="noopener"
+            onclick="gtag('event','generate_lead',{method:'demo'})"
+            >MIMORIA RECRUIT（採用支援）を見る</a
+          >
+        </div>
+      </div>
+    </footer>
+
+    <div class="bar">
+      <a
+        class="bar-tel"
+        href="tel:0300000000"
+        onclick="gtag('event','generate_lead',{method:'tel'})">電話で相談</a
+      >
+      <a
+        class="bar-apply"
+        href="#apply"
+        onclick="gtag('event','generate_lead',{method:'apply'})">応募する</a
+      >
+    </div>
+
+    <!-- AI応募受付（genba-ai-core・type:recruit）※現デモから踏襲 -->
+    <script
+      is:inline
+      src={`${base}widget.js`}
+      data-site="demo-recruit"
+      data-endpoint="https://genba-ai-core.burningbros.workers.dev"
+      data-name="採用受付AI"
+      data-accent="#e08a2b"
+      data-offset-bottom="56"
+      data-greeting="こんにちは。軽貨物ドライバー募集について、条件や応募のご質問にお答えします（合否は担当者が判断します）。"
+      defer></script>
+  </body>
+</html>
+
+<style>
+  .demo-bar {
+    background: #23262b;
+    color: #d8d5cc;
+    font-size: 12px;
+    line-height: 1.7;
+    letter-spacing: 0.04em;
+    text-align: center;
+    padding: 8px 16px;
+  }
+  .demo-bar strong {
+    color: #fff;
+    font-weight: 700;
+  }
+  .db-chunk {
+    display: inline-block;
+    white-space: nowrap;
+  }
+  .demo-bar-link {
+    display: inline-block;
+    margin-inline-start: 10px;
+    color: var(--accent);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    white-space: nowrap;
+  }
+
+  .hdr {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.96);
+    border-block-end: 1px solid var(--line);
+  }
+  .hdr-in {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    min-height: 60px;
+  }
+  .brand {
+    font-weight: 800;
+    font-size: 17px;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .brand-sub {
+    margin-inline-start: 10px;
+    padding-inline-start: 10px;
+    border-inline-start: 1px solid var(--line);
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--ink-2);
+    letter-spacing: 0.08em;
+  }
+  .hdr-nav {
+    display: none;
+    margin-inline-start: auto;
+    gap: 26px;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--ink-2);
+  }
+  .hdr-nav a {
+    text-decoration: none;
+  }
+  .hdr-nav a:hover {
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  @media (min-width: 860px) {
+    .hdr-nav {
+      display: flex;
+    }
+  }
+  .hdr-cta {
+    margin-inline-start: auto;
+    background: var(--accent);
+    color: var(--accent-ink);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    padding: 8px 20px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+  @media (min-width: 860px) {
+    .hdr-cta {
+      margin-inline-start: 0;
+    }
+  }
+  @media (max-width: 400px) {
+    .brand-sub {
+      display: none;
+    }
+  }
+
+  .ft {
+    border-block-start: 1px solid var(--line);
+    padding-block: 56px 64px;
+    font-size: 13px;
+    color: var(--ink-2);
+  }
+  .ft-name {
+    font-weight: 700;
+    color: var(--ink);
+    font-size: 14px;
+  }
+  .ft-note {
+    margin-block-start: 8px;
+  }
+  .ft-cta {
+    margin-block-start: 36px;
+    padding-block-start: 32px;
+    border-block-start: 1px solid var(--line-soft);
+  }
+  .ft-cta-title {
+    font-weight: 700;
+    color: var(--ink);
+    font-size: 15px;
+    margin-block-end: 16px;
+  }
+  .ft-cta-btn {
+    white-space: nowrap;
+    max-width: 100%;
+    padding-inline: 20px;
+  }
+  @media (max-width: 400px) {
+    .ft-cta-btn {
+      font-size: 13.5px;
+      padding-inline: 14px;
+    }
+  }
+
+  .bar {
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 60;
+    display: flex;
+    background: #fff;
+    border-block-start: 1px solid var(--line);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .bar a {
+    flex: 1;
+    min-height: 56px;
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+  }
+  .bar-tel {
+    color: var(--ink);
+    border-inline-end: 1px solid var(--line);
+  }
+  .bar-apply {
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+  @media (min-width: 860px) {
+    .bar {
+      display: none;
+    }
+  }
+</style>

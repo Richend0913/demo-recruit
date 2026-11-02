@@ -1,0 +1,72 @@
+---
+import SectionHead from './SectionHead.astro';
+import Phrases from './Phrases.astro';
+import { terms } from '../data/content';
+---
+
+<section class="section section--alt" id="terms">
+  <div class="container">
+    <SectionHead no="02" label="条件開示" title="募集条件" />
+    <table class="tbl">
+      <tbody>
+        {
+          terms.map((row) => (
+            <tr>
+              <th scope="row">{row.label}</th>
+              <td>
+                {row.strong && <strong>{row.strong}</strong>}
+                <Phrases text={row.body} />
+              </td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<style>
+  .tbl {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+    background: var(--paper);
+    border-block-start: 1px solid var(--ink);
+    border-block-end: 1px solid var(--ink);
+  }
+  .tbl th,
+  .tbl td {
+    padding: 16px 4px;
+    text-align: left;
+    vertical-align: top;
+    border-block-end: 1px solid var(--line-soft);
+  }
+  .tbl tr:last-child th,
+  .tbl tr:last-child td {
+    border-block-end: 0;
+  }
+  .tbl th {
+    width: 30%;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: 0.03em;
+    padding-inline-end: 20px;
+    white-space: nowrap;
+  }
+  .tbl td {
+    color: var(--ink-2);
+  }
+  .tbl td strong {
+    color: var(--ink);
+  }
+  @media (max-width: 560px) {
+    .tbl th {
+      width: 35%;
+      font-size: 13px;
+      padding-inline-end: 10px;
+    }
+    .tbl td {
+      font-size: 14px;
+    }
+  }
+</style>

@@ -1,0 +1,64 @@
+---
+import SectionHead from './SectionHead.astro';
+import Phrases from './Phrases.astro';
+import { appealPoints } from '../data/content';
+---
+
+<section class="section" id="appeal">
+  <div class="container">
+    <SectionHead no="01" label="仕事の魅力" title="良いことも、経費も、先に全部見せます。" />
+    <dl class="points">
+      {
+        appealPoints.map((point, i) => (
+          <div class="point">
+            <dt>
+              <span class="point-no">{String(i + 1).padStart(2, '0')}</span>
+              <Phrases text={point.title} />
+            </dt>
+            <dd><Phrases text={point.body} /></dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>
+
+<style>
+  .points {
+    border-block-start: 1px solid var(--line);
+  }
+  .point {
+    display: grid;
+    gap: 8px;
+    padding-block: 24px;
+    border-block-end: 1px solid var(--line-soft);
+  }
+  .point dt {
+    font-size: 17.5px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1.6;
+  }
+  .point-no {
+    display: inline-block;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--accent-dark);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.06em;
+    margin-inline-end: 14px;
+    vertical-align: 0.18em;
+  }
+  .point dd {
+    color: var(--ink-2);
+    font-size: 15px;
+    max-width: var(--w-text);
+  }
+  @media (min-width: 860px) {
+    .point {
+      grid-template-columns: 19em 1fr;
+      gap: 32px;
+      padding-block: 28px;
+    }
+  }
+</style>

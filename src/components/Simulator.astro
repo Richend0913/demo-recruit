@@ -1,0 +1,175 @@
+---
+import SectionHead from './SectionHead.astro';
+import { simSpec } from '../data/content';
+
+const { days, drops } = simSpec;
+---
+
+<section class="section section--alt" id="sim">
+  <div class="container">
+    <SectionHead
+      no="04"
+      label="手取りシミュレータ"
+      title="経費を引いた後の、リアルな手取り。"
+      lead="スライダーを動かすと、売上から車両リース・ガソリン・保険・手数料を引いた手取り目安が出ます（サンプル単価・実額は面談で確定）。"
+    />
+
+    <div class="sim">
+      <div class="sim-controls">
+        <div class="sim-row">
+          <label for="days">
+            <span>月の稼働日数</span>
+            <b><span id="vDays">{days.value}</span> 日</b>
+          </label>
+          <input id="days" type="range" min={days.min} max={days.max} value={days.value} />
+        </div>
+        <div class="sim-row">
+          <label for="drops">
+            <span>1日の平均配達件数</span>
+            <b><span id="vDrops">{drops.value}</span> 件</b>
+          </label>
+          <input
+            id="drops"
+            type="range"
+            min={drops.min}
+            max={drops.max}
+            step={drops.step}
+            value={drops.value}
+          />
+        </div>
+      </div>
+
+      <table class="ledger">
+        <tbody>
+          <tr>
+            <th scope="row">売上（1件 単価150円・サンプル）</th>
+            <td id="oRev">—</td>
+          </tr>
+          <tr>
+            <th scope="row">− 車両リース（月）</th>
+            <td>−¥40,000</td>
+          </tr>
+          <tr>
+            <th scope="row">− ガソリン（稼働日×700円）</th>
+            <td id="oGas">—</td>
+          </tr>
+          <tr>
+            <th scope="row">− 任意保険・貨物保険（月）</th>
+            <td>−¥18,000</td>
+          </tr>
+          <tr>
+            <th scope="row">− 業務委託手数料（売上の10%）</th>
+            <td id="oFee">—</td>
+          </tr>
+          <tr class="ledger-total">
+            <th scope="row">経費差引後の収入目安（月・税引前）</th>
+            <td id="oTake">—</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="taxnote">※ 税金・国民健康保険・国民年金・確定申告前の金額です</p>
+
+      <p class="sim-note">
+        ※
+        単価・件数・経費はデモ用のサンプル値です。実際の単価表・経費は面談で正直にお伝えします。表示額には所得税・住民税・国民健康保険・国民年金は含まれません（ご自身での確定申告が必要です）。収入は稼働状況で上下し、金額を保証するものではありません。
+      </p>
+    </div>
+  </div>
+</section>
+
+<script>
+  import '../scripts/simulator.ts';
+</script>
+
+<style>
+  .sim {
+    border: 1px solid var(--ink);
+    background: var(--paper);
+    padding: clamp(24px, 4.5vw, 44px);
+    max-width: 52rem;
+  }
+  .sim-controls {
+    display: grid;
+    gap: 28px;
+  }
+  @media (min-width: 860px) {
+    .sim-controls {
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+  }
+  .sim-row label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    margin-block-end: 6px;
+  }
+  .sim-row label b {
+    font-size: 16px;
+    font-variant-numeric: tabular-nums;
+  }
+  .sim-row label b span {
+    color: var(--accent-dark);
+    font-size: 19px;
+  }
+  .sim-row input[type='range'] {
+    width: 100%;
+    accent-color: var(--accent-dark);
+    height: 30px;
+    cursor: pointer;
+  }
+
+  .ledger {
+    width: 100%;
+    border-collapse: collapse;
+    margin-block-start: 30px;
+    font-size: 14.5px;
+  }
+  .ledger th,
+  .ledger td {
+    padding: 10px 2px;
+    border-block-end: 1px solid var(--line-soft);
+    text-align: left;
+    font-weight: 500;
+    color: var(--ink-2);
+  }
+  .ledger td {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    padding-inline-start: 16px;
+  }
+  .ledger-total th,
+  .ledger-total td {
+    border-block-end: 0;
+    border-block-start: 2px solid var(--ink);
+    padding-block-start: 16px;
+    color: var(--ink);
+    font-weight: 700;
+    vertical-align: baseline;
+  }
+  .ledger-total td {
+    font-size: clamp(24px, 5vw, 32px);
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    color: var(--accent-dark);
+    line-height: 1.2;
+  }
+  .taxnote {
+    text-align: right;
+    font-size: 12px;
+    color: var(--ink-3);
+    margin-block-start: 8px;
+  }
+  .sim-note {
+    margin-block-start: 22px;
+    padding-block-start: 18px;
+    border-block-start: 1px solid var(--line-soft);
+    font-size: 12.5px;
+    line-height: 1.85;
+    color: var(--ink-3);
+  }
+</style>

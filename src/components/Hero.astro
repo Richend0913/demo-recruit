@@ -1,0 +1,152 @@
+---
+import Phrases from './Phrases.astro';
+---
+
+<section class="hero" id="top">
+  <div class="container">
+    <p class="hero-eyebrow">業務委託ドライバー募集（軽貨物）</p>
+    <h1 class="hero-title">
+      <Phrases text="手取りの現実を、正直にお見せします。" />
+    </h1>
+    <p class="hero-sub">
+      <Phrases
+        text="「月◯万可能！」ではなく、経費を引いた後の手取りをシミュレータで。あなたの稼働に合わせて、いくら残るかを先に確かめてください。未経験・普通免許でOK、同乗研修あり。"
+      />
+    </p>
+
+    <dl class="hero-specs">
+      <div class="spec">
+        <dt>職種</dt>
+        <dd>軽貨物ドライバー<small>（業務委託）</small></dd>
+      </div>
+      <div class="spec">
+        <dt>報酬</dt>
+        <dd>1配達 150円〜<small>（完全出来高・手取り目安は試算で）</small></dd>
+      </div>
+      <div class="spec">
+        <dt>勤務地</dt>
+        <dd>東京都・神奈川県<small>（架空）</small></dd>
+      </div>
+    </dl>
+
+    <div class="hero-btns">
+      <a class="btn btn--primary" href="#sim">手取りを試算する</a>
+      <a class="btn btn--ghost" href="#terms">条件を全部見る</a>
+    </div>
+
+    <dl class="hero-facts">
+      <div class="fact">
+        <dt>未経験可</dt>
+        <dd>同乗研修3〜5日</dd>
+      </div>
+      <div class="fact">
+        <dt>週2〜OK</dt>
+        <dd>稼働日は相談</dd>
+      </div>
+      <div class="fact">
+        <dt>最短3日</dt>
+        <dd>応募→稼働開始（サンプル）</dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-block: clamp(56px, 9vw, 104px) clamp(56px, 8vw, 88px);
+  }
+  .hero-eyebrow {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--accent-dark);
+    margin-block-end: 22px;
+  }
+  .hero-title {
+    font-size: clamp(31px, 7.4vw, 52px);
+    line-height: 1.42;
+    max-width: 14em;
+  }
+  .hero-sub {
+    margin-block-start: 26px;
+    color: var(--ink-2);
+    font-size: clamp(15px, 2.2vw, 17px);
+    max-width: 36em;
+  }
+
+  .hero-specs {
+    margin-block-start: clamp(36px, 6vw, 52px);
+    border-block-start: 1px solid var(--ink);
+  }
+  .spec {
+    display: grid;
+    grid-template-columns: 5.5em 1fr;
+    gap: 16px;
+    align-items: baseline;
+    padding-block: 14px;
+    border-block-end: 1px solid var(--line-soft);
+  }
+  .spec dt {
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--ink-3);
+  }
+  .spec dd {
+    font-size: clamp(17px, 3vw, 21px);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  .spec dd small {
+    display: inline-block;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--ink-2);
+    margin-inline-start: 6px;
+  }
+  @media (min-width: 860px) {
+    .hero-specs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0 40px;
+    }
+    .spec {
+      grid-template-columns: 1fr;
+      gap: 4px;
+      padding-block: 16px 18px;
+    }
+  }
+
+  .hero-btns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-block-start: clamp(32px, 5vw, 44px);
+  }
+
+  .hero-facts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-block-start: clamp(40px, 6vw, 56px);
+    padding-block-start: 24px;
+    border-block-start: 1px solid var(--line-soft);
+  }
+  .fact dt {
+    font-size: clamp(19px, 3.6vw, 26px);
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    line-height: 1.4;
+  }
+  .fact dd {
+    font-size: 12px;
+    color: var(--ink-3);
+    letter-spacing: 0.06em;
+    margin-block-start: 4px;
+  }
+  @media (max-width: 560px) {
+    .hero-facts {
+      gap: 14px;
+    }
+  }
+</style>

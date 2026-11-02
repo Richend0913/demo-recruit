@@ -1,0 +1,58 @@
+---
+import SectionHead from './SectionHead.astro';
+import Phrases from './Phrases.astro';
+import { flowSteps } from '../data/content';
+---
+
+<section class="section" id="flow">
+  <div class="container">
+    <SectionHead no="05" label="応募の流れ" title="応募から稼働開始まで" />
+    <ol class="steps">
+      {
+        flowSteps.map((step, i) => (
+          <li class="step">
+            <span class="step-no">{String(i + 1).padStart(2, '0')}</span>
+            <div class="step-body">
+              <h3>
+                <Phrases text={step.title} />
+              </h3>
+              <p><Phrases text={step.body} /></p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .steps {
+    list-style: none;
+    max-width: 46rem;
+  }
+  .step {
+    display: grid;
+    grid-template-columns: 3.2em 1fr;
+    gap: 16px;
+    padding-block: 22px;
+    border-block-end: 1px solid var(--line-soft);
+  }
+  .step:first-child {
+    border-block-start: 1px solid var(--line);
+  }
+  .step-no {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--accent-dark);
+    font-variant-numeric: tabular-nums;
+    padding-block-start: 3px;
+  }
+  .step h3 {
+    font-size: 17px;
+  }
+  .step p {
+    color: var(--ink-2);
+    font-size: 15px;
+    margin-block-start: 4px;
+  }
+</style>
