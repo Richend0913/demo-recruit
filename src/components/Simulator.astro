@@ -1,14 +1,14 @@
 ---
 import SectionHead from './SectionHead.astro';
+import Phrases from './Phrases.astro';
 import { simSpec } from '../data/content';
 
 const { days, drops } = simSpec;
 ---
 
-<section class="section section--alt" id="sim">
+<section class="section" id="sim">
   <div class="container">
     <SectionHead
-      no="04"
       label="手取りシミュレータ"
       title="経費を引いた後の、リアルな手取り。"
       lead="スライダーを動かすと、売上から車両リース・ガソリン・保険・手数料を引いた手取り目安が出ます（サンプル単価・実額は面談で確定）。"
@@ -71,7 +71,9 @@ const { days, drops } = simSpec;
 
       <p class="sim-note">
         ※
-        単価・件数・経費はデモ用のサンプル値です。実際の単価表・経費は面談で正直にお伝えします。表示額には所得税・住民税・国民健康保険・国民年金は含まれません（ご自身での確定申告が必要です）。収入は稼働状況で上下し、金額を保証するものではありません。
+        <Phrases
+          text="単価・件数・経費はデモ用のサンプル値です。実際の単価表・経費は面談で正直にお伝えします。表示額には所得税・住民税・国民健康保険・国民年金は含まれません（ご自身での確定申告が必要です）。収入は稼働状況で上下し、金額を保証するものではありません。"
+        />
       </p>
     </div>
   </div>
@@ -85,8 +87,13 @@ const { days, drops } = simSpec;
   .sim {
     border: 1px solid var(--ink);
     background: var(--paper);
-    padding: clamp(24px, 4.5vw, 44px);
+    padding: 24px;
     max-width: 52rem;
+  }
+  @media (min-width: 860px) {
+    .sim {
+      padding: 40px 44px;
+    }
   }
   .sim-controls {
     display: grid;
@@ -152,11 +159,16 @@ const { days, drops } = simSpec;
     vertical-align: baseline;
   }
   .ledger-total td {
-    font-size: clamp(24px, 5vw, 32px);
-    font-weight: 800;
+    font-size: 26px;
+    font-weight: 700;
     letter-spacing: 0.01em;
     color: var(--accent-dark);
     line-height: 1.2;
+  }
+  @media (min-width: 860px) {
+    .ledger-total td {
+      font-size: 32px;
+    }
   }
   .taxnote {
     text-align: right;

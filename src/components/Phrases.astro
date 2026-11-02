@@ -2,7 +2,9 @@
 /**
  * 日本語の文節境界でのみ改行させるためのコンポーネント。
  * BudouX で文を文節に分割し、各文節を inline-block 化することで、
- * 文節の途中では絶対に折り返さない（文節の境界だけが改行位置になる）。
+ * 文節の途中では折り返さない（文節の境界だけが改行位置になる）。
+ * 長い文では「／」でも先に分割し、1チャンクが行幅を超えて
+ * 内部で割れる（例: ガソ|リン）ことを防ぐ。
  */
 import { loadDefaultJapaneseParser } from 'budoux';
 
@@ -12,7 +14,9 @@ interface Props {
 
 const parser = loadDefaultJapaneseParser();
 const { text } = Astro.props;
-const phrases = parser.parse(text);
+const phrases = text
+  .split(/(?<=／)/)
+  .flatMap((part) => (part ? parser.parse(part) : []));
 ---
 
 {

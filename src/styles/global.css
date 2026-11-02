@@ -1,32 +1,56 @@
 /*
  * コスモ軽貨物 採用LP（デモ）— デザインシステム
- * 方針: 白地・墨文字・罫線（1px）で組み立てる編集型レイアウト。
- * カードグリッド／グラデーション／ドロップシャドウ／絵文字には頼らない。
- * アクセントはアンバー1色のみ、CTAと比較表の要所に限定して使う。
+ * 設計ブリーフ（design-brief.md）準拠:
+ * - タイポグラフィは離散ステップのトークン（fluid な clamp() は使わない）
+ * - 階層はサイズと字間で作る。本文行間 1.75、純黒を使わない（#323232）
+ * - 余白は 4px 倍数、コンテナ 1120px
+ * - 色はアクセント1色。面の分離は階調とヘアラインのみ、影は使わない
+ * - モーションは機能的なものだけ（≤300ms / ease-out / 色の遷移のみ）
  */
 
 :root {
-  --ink: #1a1c1f;
-  --ink-2: #454b51;
-  --ink-3: #767d84;
-  --line: #d9dce0;
-  --line-soft: #e8eaed;
+  --ink: #323232;
+  --ink-2: #595959;
+  --ink-3: #8c8c8c;
+  --line: #dcdcdc;
+  --line-soft: #ececec;
   --paper: #ffffff;
-  --paper-alt: #f7f7f4;
+  --paper-alt: #f7f7f7;
   --accent: #e08a2b;
-  --accent-dark: #a96a14;
-  --accent-ink: #1a1206;
-  --notice-bg: #fdf6e7;
-  --notice-line: #e7d3a1;
-  --notice-ink: #5c4718;
+  --accent-dark: #9a6206;
+  --accent-ink: #201503;
+  --accent-tint: #fdf3e3;
 
   --font: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans',
     'BIZ UDPGothic', 'Yu Gothic UI', Meiryo, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas,
+    'Noto Sans Mono', monospace;
 
-  --w-wide: 1080px;
-  --w-text: 40rem;
+  --w-wide: 1120px;
+  --w-text: 42rem;
 
-  --s-section: clamp(64px, 10vw, 112px);
+  /* タイプスケール（離散ステップ。860px で一段上げる） */
+  --fs-display: 30px;
+  --fs-h2: 23px;
+  --fs-h3: 17px;
+  --fs-lead: 15.5px;
+  --fs-body: 16px;
+  --fs-sm: 14px;
+  --fs-xs: 12.5px;
+
+  --section-pad: 64px;
+  --radius: 4px;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@media (min-width: 860px) {
+  :root {
+    --fs-display: 40px;
+    --fs-h2: 28px;
+    --fs-h3: 18px;
+    --fs-lead: 16px;
+    --section-pad: 96px;
+  }
 }
 
 *,
@@ -46,9 +70,9 @@ body {
   font-family: var(--font);
   background: var(--paper);
   color: var(--ink);
-  font-size: 16px;
-  line-height: 1.95;
-  letter-spacing: 0.03em;
+  font-size: var(--fs-body);
+  line-height: 1.75;
+  letter-spacing: 0.02em;
   /* 和文の禁則を厳密に。折り返しは通常位置のみ（anywhere で文字単位に割らない） */
   line-break: strict;
   word-break: normal;
@@ -87,7 +111,7 @@ a {
 }
 
 .section {
-  padding-block: var(--s-section);
+  padding-block: var(--section-pad);
 }
 .section + .section {
   border-block-start: 1px solid var(--line);
@@ -101,46 +125,36 @@ a {
 h1,
 h2,
 h3 {
-  font-weight: 800;
-  letter-spacing: 0.02em;
+  font-weight: 700;
+  letter-spacing: 0.01em;
   font-feature-settings: 'palt';
   line-break: strict;
-  text-wrap: balance;
 }
 
 .section-head {
-  margin-block-end: clamp(32px, 5vw, 48px);
+  margin-block-end: 40px;
+}
+@media (min-width: 860px) {
+  .section-head {
+    margin-block-end: 48px;
+  }
 }
 .section-label {
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
   font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.22em;
-  color: var(--ink-2);
-  margin-block-end: 18px;
-}
-.section-label .no {
-  color: var(--accent-dark);
-  font-size: 13px;
-  letter-spacing: 0.08em;
-  font-variant-numeric: tabular-nums;
-}
-.section-label::after {
-  content: '';
-  flex: 1;
-  border-block-start: 1px solid var(--line);
-  transform: translateY(-3px);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--ink-3);
+  margin-block-end: 16px;
 }
 .section-head h2 {
-  font-size: clamp(23px, 4.6vw, 32px);
-  line-height: 1.5;
+  font-size: var(--fs-h2);
+  line-height: 1.45;
 }
 .lead {
   margin-block-start: 16px;
   color: var(--ink-2);
-  font-size: clamp(15px, 2vw, 16.5px);
+  font-size: var(--fs-lead);
+  line-height: 1.8;
   max-width: var(--w-text);
 }
 
@@ -152,15 +166,18 @@ h3 {
   justify-content: center;
   gap: 8px;
   min-height: 52px;
-  padding: 12px 30px;
+  padding: 12px 28px;
   font-weight: 700;
-  font-size: 15.5px;
+  font-size: 15px;
   letter-spacing: 0.04em;
   text-decoration: none;
   border: 1px solid var(--ink);
-  border-radius: 2px;
+  border-radius: var(--radius);
   cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition:
+    background-color 160ms var(--ease-out),
+    color 160ms var(--ease-out),
+    border-color 160ms var(--ease-out);
 }
 .btn--primary {
   background: var(--accent);

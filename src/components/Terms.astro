@@ -4,9 +4,13 @@ import Phrases from './Phrases.astro';
 import { terms } from '../data/content';
 ---
 
-<section class="section section--alt" id="terms">
+<section class="section" id="terms">
   <div class="container">
-    <SectionHead no="02" label="条件開示" title="募集条件" />
+    <SectionHead
+      label="条件開示"
+      title="募集条件"
+      lead="良い条件だけを抜き出さず、負担も含めて全項目を載せます。金額は手取りシミュレータの計算条件と一致しています。"
+    />
     <table class="tbl">
       <tbody>
         {
@@ -22,6 +26,7 @@ import { terms } from '../data/content';
         }
       </tbody>
     </table>
+    <p class="tbl-note">※ 本ページの条件・金額はすべてデモ用のサンプルです。実際の募集では、契約時に書面（電磁的方法）で明示されます。</p>
   </div>
 </section>
 
@@ -31,7 +36,7 @@ import { terms } from '../data/content';
     border-collapse: collapse;
     font-size: 15px;
     background: var(--paper);
-    border-block-start: 1px solid var(--ink);
+    border-block-start: 2px solid var(--ink);
     border-block-end: 1px solid var(--ink);
   }
   .tbl th,
@@ -40,17 +45,18 @@ import { terms } from '../data/content';
     text-align: left;
     vertical-align: top;
     border-block-end: 1px solid var(--line-soft);
+    line-height: 1.7;
   }
   .tbl tr:last-child th,
   .tbl tr:last-child td {
     border-block-end: 0;
   }
   .tbl th {
-    width: 30%;
+    width: 26%;
     font-weight: 700;
     color: var(--ink);
     letter-spacing: 0.03em;
-    padding-inline-end: 20px;
+    padding-inline-end: 24px;
     white-space: nowrap;
   }
   .tbl td {
@@ -59,14 +65,28 @@ import { terms } from '../data/content';
   .tbl td strong {
     color: var(--ink);
   }
+  .tbl-note {
+    font-size: 12.5px;
+    color: var(--ink-3);
+    margin-block-start: 16px;
+  }
   @media (max-width: 560px) {
+    /* モバイルはラベルと本文を積む（スペック表のモバイル形式）。
+       本文が全幅になるので、文節チャンクが行幅を超えて内部で割れない。 */
+    .tbl th,
+    .tbl td {
+      display: block;
+      width: auto;
+    }
     .tbl th {
-      width: 35%;
       font-size: 13px;
-      padding-inline-end: 10px;
+      padding-block: 16px 0;
+      padding-inline-end: 0;
+      border-block-end: 0;
     }
     .tbl td {
       font-size: 14px;
+      padding-block: 4px 16px;
     }
   }
 </style>

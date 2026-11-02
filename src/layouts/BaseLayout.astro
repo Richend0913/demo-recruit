@@ -36,7 +36,7 @@ const base = import.meta.env.BASE_URL;
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
     <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-63VB4HT3T2"></script>
@@ -68,6 +68,7 @@ const base = import.meta.env.BASE_URL;
       <div class="container hdr-in">
         <a class="brand" href="#top">コスモ軽貨物<span class="brand-sub">ドライバー募集</span></a>
         <nav class="hdr-nav" aria-label="ページ内案内">
+          <a href="#scene">応募の実物</a>
           <a href="#terms">募集条件</a>
           <a href="#sim">手取り試算</a>
           <a href="#flow">応募の流れ</a>
@@ -136,8 +137,8 @@ const base = import.meta.env.BASE_URL;
 
 <style>
   .demo-bar {
-    background: #23262b;
-    color: #d8d5cc;
+    background: #333333;
+    color: #d9d9d9;
     font-size: 12px;
     line-height: 1.7;
     letter-spacing: 0.04em;
@@ -176,7 +177,7 @@ const base = import.meta.env.BASE_URL;
     min-height: 60px;
   }
   .brand {
-    font-weight: 800;
+    font-weight: 700;
     font-size: 17px;
     letter-spacing: 0.04em;
     text-decoration: none;
@@ -221,7 +222,7 @@ const base = import.meta.env.BASE_URL;
     font-size: 14px;
     letter-spacing: 0.05em;
     padding: 8px 20px;
-    border-radius: 2px;
+    border-radius: var(--radius);
     white-space: nowrap;
   }
   @media (min-width: 860px) {

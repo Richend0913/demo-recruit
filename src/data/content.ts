@@ -106,6 +106,65 @@ export const faqItems: FaqItem[] = [
   },
 ];
 
+/**
+ * 「応募の実物」シーン用のサンプルデータ。
+ * 1人の応募者（K.Tさん）が、求人を見る→応募する→会社に通知が届く→
+ * 応募者一覧・CSVに載る、までを一貫した時刻・属性で描くためのもの。
+ * すべて架空のサンプル。条件は terms / simSpec と矛盾させない。
+ */
+export const sceneApplicant = {
+  name: 'K.T',
+  age: '30代',
+  area: '神奈川県',
+  contact: '090-****-1234',
+  desired: '週4日',
+  experience: '未経験',
+  message: '未経験ですが、週4日ほど稼働したいです。希望エリアは神奈川です。',
+  appliedAt: '2026年11月2日（月）21:47',
+} as const;
+
+export interface SceneListRow {
+  datetime: string;
+  name: string;
+  profile: string;
+  wish: string;
+  status: string;
+  isNew?: boolean;
+}
+
+export const sceneListRows: SceneListRow[] = [
+  {
+    datetime: '2026-11-02 21:47',
+    name: 'K.T',
+    profile: '30代・神奈川県',
+    wish: '週4日・未経験',
+    status: '未対応',
+    isNew: true,
+  },
+  {
+    datetime: '2026-11-01 18:03',
+    name: 'M.S',
+    profile: '40代・東京都',
+    wish: '週5日・宅配経験2年',
+    status: '連絡済み',
+  },
+  {
+    datetime: '2026-10-31 12:26',
+    name: 'A.Y',
+    profile: '20代・神奈川県',
+    wish: '週3日・未経験',
+    status: '面談調整中',
+  },
+];
+
+/** 応募者一覧から書き出される CSV の中身（上記一覧と一致させる） */
+export const sceneCsvLines: string[] = [
+  '応募日時,氏名,年代,居住エリア,連絡先,経験,希望稼働,ひとこと,対応状況',
+  '2026-11-02 21:47,K.T,30代,神奈川県,090-****-1234,未経験,週4日,未経験ですが週4日ほど稼働したいです,未対応',
+  '2026-11-01 18:03,M.S,40代,東京都,080-****-5678,宅配経験2年,週5日,平日のみ希望です,連絡済み',
+  '2026-10-31 12:26,A.Y,20代,神奈川県,070-****-9012,未経験,週3日,話を聞いてから決めたいです,面談調整中',
+];
+
 /** シミュレータの計算仕様（現デモから踏襲・決定的） */
 export const simSpec = {
   unitPrice: 150, // 1件あたり単価（円・サンプル）

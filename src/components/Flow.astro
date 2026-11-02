@@ -6,7 +6,7 @@ import { flowSteps } from '../data/content';
 
 <section class="section" id="flow">
   <div class="container">
-    <SectionHead no="05" label="応募の流れ" title="応募から稼働開始まで" />
+    <SectionHead label="応募の流れ" title="応募から稼働開始まで" />
     <ol class="steps">
       {
         flowSteps.map((step, i) => (
@@ -41,18 +41,19 @@ import { flowSteps } from '../data/content';
     border-block-start: 1px solid var(--line);
   }
   .step-no {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
-    color: var(--accent-dark);
+    color: var(--ink-3);
     font-variant-numeric: tabular-nums;
     padding-block-start: 3px;
   }
   .step h3 {
-    font-size: 17px;
+    font-size: var(--fs-h3);
   }
   .step p {
     color: var(--ink-2);
     font-size: 15px;
+    line-height: 1.8;
     margin-block-start: 4px;
   }
 </style>

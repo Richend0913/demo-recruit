@@ -6,7 +6,6 @@ import Phrases from './Phrases.astro';
 <section class="section" id="apply" style="scroll-margin-top:60px">
   <div class="container">
     <SectionHead
-      no="07"
       label="応募・お問い合わせ"
       title="まずは話を聞くだけ、でも大歓迎です。"
       lead="右下のAI応募受付で、いつでも質問・応募できます。合否はAIでは決まりません（担当者が面談します）。お電話でもどうぞ。"
@@ -57,7 +56,13 @@ import Phrases from './Phrases.astro';
   .apply-box {
     max-width: 40rem;
     border: 1px solid var(--line);
-    padding: clamp(24px, 4vw, 36px);
+    border-radius: var(--radius);
+    padding: 24px;
+  }
+  @media (min-width: 860px) {
+    .apply-box {
+      padding: 36px;
+    }
   }
   .fld {
     margin-block-end: 22px;
@@ -105,12 +110,13 @@ import Phrases from './Phrases.astro';
   .honest {
     max-width: 40rem;
     margin-block-start: 28px;
-    background: var(--notice-bg);
-    border: 1px solid var(--notice-line);
-    padding: 20px 22px;
+    background: var(--paper-alt);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 20px 24px;
     font-size: 13.5px;
-    line-height: 1.9;
-    color: var(--notice-ink);
+    line-height: 1.85;
+    color: var(--ink-2);
   }
   .honest strong {
     font-weight: 700;

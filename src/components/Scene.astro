@@ -1,0 +1,472 @@
+---
+import SectionHead from './SectionHead.astro';
+import Phrases from './Phrases.astro';
+import { sceneApplicant as a, sceneListRows, sceneCsvLines} from '../data/content';
+---
+
+<section class="section section--alt" id="scene">
+<div class="container">
+<SectionHead
+label="応募の実物"
+title="応募すると、会社にはこう届きます"
+lead="1人の応募者が、スマホで求人を見て応募し、会社に通知が届いて一覧に載るまで。画面はすべて、このページと同じ仕組みの実物（デモ用のサンプルデータ）です。"
+/>
+
+<div class="scene">
+<!-- 1. スマホで見る求人 -->
+<figure class="sc sc--phone">
+<figcaption class="sc-cap"><span class="sc-no">1</span>求人を見る（応募者のスマホ）</figcaption>
+<div class="phone">
+<div class="phone-status">
+<span class="phone-time">21:47</span>
+<span class="phone-notch" aria-hidden="true"></span>
+<span class="phone-net">LTE</span>
+</div>
+<div class="phone-body">
+<p class="phone-brand">コスモ軽貨物</p>
+<p class="phone-job">軽貨物ドライバー募集<small>（業務委託）</small></p>
+<ul class="phone-points">
+<li>1配達 <b>150円〜</b>（完全出来高）</li>
+<li>東京都・神奈川県</li>
+<li>未経験可・普通免許（AT可）</li>
+</ul>
+<p class="phone-note"><Phrases text="経費（車両リース月40,000円など）は条件表で全開示" /></p>
+<span class="phone-cta">応募する</span>
+<div class="phone-chat">
+<p class="phone-chat-name">採用受付AI</p>
+<p class="phone-chat-body"><Phrases text="こんにちは。条件や応募のご質問に、いつでもお答えします。" /></p>
+</div>
+</div>
+</div>
+</figure>
+
+<!-- 2. 応募の送信 -->
+<figure class="sc">
+<figcaption class="sc-cap"><span class="sc-no">2</span>応募する（送信直後の画面）</figcaption>
+<div class="panel">
+<p class="done-title">応募を受け付けました</p>
+<dl class="kv">
+<div>
+<dt>受付日時</dt>
+<dd>{a.appliedAt}</dd>
+</div>
+<div>
+<dt>お名前</dt>
+<dd>{a.name}</dd>
+</div>
+<div>
+<dt>ご連絡先</dt>
+<dd>{a.contact}</dd>
+</div>
+<div>
+<dt>ひとこと</dt>
+<dd><Phrases text={a.message} /></dd>
+</div>
+</dl>
+<p class="panel-note">
+<Phrases
+text="この内容で受付完了メールが自動送信されます。担当者からは24時間以内にご連絡します（デモ）。"
+/>
+</p>
+</div>
+</figure>
+
+<!-- 3. 会社への通知 -->
+<figure class="sc">
+<figcaption class="sc-cap"><span class="sc-no">3</span>会社に届く通知（メール）</figcaption>
+<div class="panel">
+<dl class="kv kv--mail">
+<div>
+<dt>差出人</dt>
+<dd>コスモ軽貨物 採用受付</dd>
+</div>
+<div>
+<dt>件名</dt>
+<dd>{a.name}さん（{a.age}・{a.experience}）</dd>
+</div>
+<div>
+<dt>日時</dt>
+<dd>2026年11月2日 21:47</dd>
+</div>
+</dl>
+<p class="mail-lead"><Phrases text="新しい応募がありました。" /></p>
+<dl class="kv">
+<div>
+<dt>氏名</dt>
+<dd>
+{a.name}（{a.age}・{a.area}）
+</dd>
+</div>
+<div>
+<dt>連絡先</dt>
+<dd>{a.contact}</dd>
+</div>
+<div>
+<dt>希望稼働</dt>
+<dd>{a.desired}・{a.experience}</dd>
+</div>
+<div>
+<dt>ひとこと</dt>
+<dd><Phrases text={a.message} /></dd>
+</div>
+</dl>
+<p class="panel-note">
+<Phrases text="夜間・休日の応募もその場で受け付け、応募者への自動返信まで済ませます。" />
+</p>
+</div>
+</figure>
+
+<!-- 4. 応募者一覧・CSV -->
+<figure class="sc sc--wide">
+<figcaption class="sc-cap"><span class="sc-no">4</span>応募者一覧とCSV（会社側）</figcaption>
+<div class="panel">
+<div class="list-head">
+<p class="list-title">応募者一覧<span class="list-month">2026年11月</span></p>
+<span class="csv-btn">CSVでダウンロード</span>
+</div>
+<div class="list-scroll">
+<table class="list-tbl">
+<thead>
+<tr>
+<th scope="col">応募日時</th>
+<th scope="col">氏名</th>
+<th scope="col">属性</th>
+<th scope="col">希望・経験</th>
+<th scope="col">対応状況</th>
+</tr>
+</thead>
+<tbody>
+{
+sceneListRows.map((row) => (
+<tr class={row.isNew? 'is-new': undefined}>
+<td class="td-time">{row.datetime}</td>
+<td class="td-name">{row.name}</td>
+<td>{row.profile}</td>
+<td>{row.wish}</td>
+<td class={row.isNew? 'td-status is-new-status': 'td-status'}>
+{row.status}
+</td>
+</tr>
+))
+}
+</tbody>
+</table>
+</div>
+<div class="csv">
+<p class="csv-name">applicants_2026-11.csv</p>
+<pre class="csv-body">{sceneCsvLines.join('\n')}</pre>
+</div>
+<p class="panel-note">
+<Phrases
+text="応募は一覧で管理でき、そのままCSVで書き出せます。媒体ごとに分かれていた応募も、ここに一本化されます。"
+/>
+</p>
+</div>
+</figure>
+</div>
+
+<p class="scene-note">
+※ 画面はいずれもデモ用のサンプルです。氏名はイニシャル、連絡先は伏字で表示しています。
+</p>
+</div>
+</section>
+
+<style>
+.scene {
+display: grid;
+gap: 40px 24px;
+}
+@media (min-width: 1024px) {
+.scene {
+grid-template-columns: 320px 1fr 1fr;
+align-items: start;
+}
+.sc--wide {
+grid-column: 1 / -1;
+}
+}
+
+.sc {
+min-width: 0;
+}
+.sc-cap {
+display: flex;
+align-items: baseline;
+gap: 10px;
+font-size: 13px;
+font-weight: 700;
+letter-spacing: 0.06em;
+margin-block-end: 14px;
+}
+.sc-no {
+display: inline-grid;
+place-items: center;
+width: 22px;
+height: 22px;
+flex: none;
+border: 1px solid var(--ink);
+border-radius: 50%;
+font-size: 12px;
+font-variant-numeric: tabular-nums;
+transform: translateY(4px);
+}
+
+/* ---------- スマホ ---------- */
+.phone {
+max-width: 320px;
+margin-inline: auto;
+background: var(--paper);
+border: 2px solid var(--ink);
+border-radius: 36px;
+overflow: hidden;
+}
+@media (min-width: 1024px) {
+.phone {
+margin-inline: 0;
+}
+}
+.phone-status {
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 10px 22px 4px;
+font-size: 12px;
+font-weight: 700;
+font-variant-numeric: tabular-nums;
+}
+.phone-notch {
+width: 72px;
+height: 18px;
+border-radius: 9px;
+background: var(--ink);
+}
+.phone-net {
+font-size: 11px;
+letter-spacing: 0.08em;
+color: var(--ink-2);
+}
+.phone-body {
+padding: 16px 20px 24px;
+}
+.phone-brand {
+font-size: 12px;
+font-weight: 700;
+letter-spacing: 0.14em;
+color: var(--ink-2);
+padding-block-end: 10px;
+border-block-end: 1px solid var(--line);
+}
+.phone-job {
+font-size: 19px;
+font-weight: 700;
+line-height: 1.5;
+margin-block-start: 14px;
+}
+.phone-job small {
+font-size: 12.5px;
+font-weight: 500;
+color: var(--ink-2);
+}
+.phone-points {
+list-style: none;
+margin-block-start: 12px;
+font-size: 13.5px;
+line-height: 1.7;
+color: var(--ink-2);
+}
+.phone-points li {
+padding-block: 7px;
+border-block-end: 1px solid var(--line-soft);
+}
+.phone-points b {
+color: var(--ink);
+font-size: 15px;
+}
+.phone-note {
+font-size: 11.5px;
+line-height: 1.7;
+color: var(--ink-3);
+margin-block-start: 12px;
+}
+.phone-cta {
+display: grid;
+place-items: center;
+min-height: 46px;
+margin-block-start: 14px;
+background: var(--accent);
+color: var(--accent-ink);
+border-radius: var(--radius);
+font-weight: 700;
+font-size: 14.5px;
+letter-spacing: 0.05em;
+}
+.phone-chat {
+margin-block-start: 16px;
+padding: 12px 14px;
+background: var(--paper-alt);
+border-radius: var(--radius);
+}
+.phone-chat-name {
+font-size: 11px;
+font-weight: 700;
+letter-spacing: 0.08em;
+color: var(--accent-dark);
+}
+.phone-chat-body {
+font-size: 12.5px;
+line-height: 1.7;
+color: var(--ink-2);
+margin-block-start: 4px;
+}
+
+/* ---------- パネル共通 ---------- */
+.panel {
+background: var(--paper);
+border: 1px solid var(--line);
+border-radius: var(--radius);
+padding: 24px;
+height: 100%;
+}
+.done-title {
+font-size: var(--fs-h3);
+font-weight: 700;
+padding-block-end: 14px;
+border-block-end: 1px solid var(--line);
+}
+.kv {
+font-size: var(--fs-sm);
+}
+.kv > div {
+display: grid;
+grid-template-columns: 5.5em 1fr;
+gap: 12px;
+padding-block: 9px;
+border-block-end: 1px solid var(--line-soft);
+}
+.kv dt {
+font-weight: 700;
+color: var(--ink-3);
+font-size: 12.5px;
+letter-spacing: 0.04em;
+padding-block-start: 2px;
+white-space: nowrap;
+}
+.kv dd {
+color: var(--ink-2);
+line-height: 1.7;
+}
+.kv--mail {
+padding-block-end: 4px;
+border-block-end: 1px solid var(--line);
+}
+.kv--mail dd {
+color: var(--ink);
+font-weight: 500;
+}
+.mail-lead {
+font-size: var(--fs-sm);
+margin-block-start: 14px;
+}
+.panel-note {
+font-size: 12.5px;
+line-height: 1.75;
+color: var(--ink-3);
+margin-block-start: 16px;
+}
+
+/* ---------- 一覧・CSV ---------- */
+.list-head {
+display: flex;
+align-items: center;
+justify-content: space-between;
+flex-wrap: wrap;
+gap: 8px 16px;
+padding-block-end: 14px;
+border-block-end: 1px solid var(--line);
+}
+.list-title {
+font-weight: 700;
+font-size: 15px;
+white-space: nowrap;
+}
+.list-month {
+font-size: 12.5px;
+font-weight: 500;
+color: var(--ink-3);
+margin-inline-start: 10px;
+white-space: nowrap;
+}
+.csv-btn {
+flex: none;
+font-size: 12.5px;
+font-weight: 700;
+letter-spacing: 0.03em;
+border: 1px solid var(--ink);
+border-radius: var(--radius);
+padding: 6px 14px;
+}
+.list-scroll {
+overflow-x: auto;
+}
+.list-tbl {
+width: 100%;
+min-width: 620px;
+border-collapse: collapse;
+font-size: var(--fs-sm);
+}
+.list-tbl th,
+.list-tbl td {
+text-align: left;
+padding: 11px 10px 11px 2px;
+border-block-end: 1px solid var(--line-soft);
+white-space: nowrap;
+}
+.list-tbl thead th {
+font-size: 12px;
+font-weight: 700;
+letter-spacing: 0.06em;
+color: var(--ink-3);
+}
+.td-time {
+font-variant-numeric: tabular-nums;
+color: var(--ink-2);
+}
+.td-name {
+font-weight: 700;
+}
+.td-status {
+color: var(--ink-2);
+}
+.is-new-status {
+color: var(--accent-dark);
+font-weight: 700;
+}
+.csv {
+margin-block-start: 20px;
+background: var(--paper-alt);
+border-radius: var(--radius);
+overflow: hidden;
+}
+.csv-name {
+font-family: var(--font-mono);
+font-size: 12px;
+color: var(--ink-2);
+padding: 9px 16px;
+border-block-end: 1px solid var(--line-soft);
+}
+.csv-body {
+font-family: var(--font-mono);
+font-size: 11.5px;
+line-height: 1.8;
+color: var(--ink-2);
+padding: 12px 16px;
+overflow-x: auto;
+white-space: pre;
+}
+
+.scene-note {
+font-size: 12.5px;
+color: var(--ink-3);
+margin-block-start: 28px;
+}
+</style>

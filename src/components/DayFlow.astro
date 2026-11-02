@@ -6,12 +6,11 @@ import { daySteps } from '../data/content';
 
 <section class="section" id="day">
   <div class="container">
-    <SectionHead no="03" label="1日の流れ" title="だいたいこんな感じです" />
+    <SectionHead label="1日の流れ" title="だいたいこんな感じです" />
     <ol class="steps">
       {
-        daySteps.map((step, i) => (
+        daySteps.map((step) => (
           <li class="step">
-            <span class="step-no">{String(i + 1).padStart(2, '0')}</span>
             <div class="step-body">
               <h3>
                 <span class="step-time">{step.time}</span>
@@ -32,40 +31,31 @@ import { daySteps } from '../data/content';
     max-width: 46rem;
   }
   .step {
-    display: grid;
-    grid-template-columns: 3.2em 1fr;
-    gap: 16px;
-    padding-block: 22px;
+    padding-block: 20px;
     border-block-end: 1px solid var(--line-soft);
   }
   .step:first-child {
     border-block-start: 1px solid var(--line);
   }
-  .step-no {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--accent-dark);
-    font-variant-numeric: tabular-nums;
-    padding-block-start: 3px;
-  }
   .step h3 {
-    font-size: 17px;
+    font-size: var(--fs-h3);
     line-height: 1.6;
   }
   .step-time {
     display: inline-block;
-    font-size: 13px;
+    min-width: 6.5em;
+    font-size: 13.5px;
     font-weight: 700;
-    color: var(--ink-3);
-    letter-spacing: 0.08em;
+    color: var(--ink);
+    letter-spacing: 0.06em;
     font-variant-numeric: tabular-nums;
-    margin-inline-end: 14px;
-    vertical-align: 0.14em;
+    margin-inline-end: 12px;
     white-space: nowrap;
   }
   .step p {
     color: var(--ink-2);
     font-size: 15px;
+    line-height: 1.8;
     margin-block-start: 4px;
   }
 </style>
