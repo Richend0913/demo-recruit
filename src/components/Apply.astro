@@ -3,8 +3,9 @@ import SectionHead from './SectionHead.astro';
 import Phrases from './Phrases.astro';
 ---
 
-<section class="section" id="apply" style="scroll-margin-top:60px">
-  <div class="container">
+<section class="section apply-sec" id="apply" style="scroll-margin-top:60px">
+  <div class="mesh" aria-hidden="true"></div>
+  <div class="container apply-in">
     <SectionHead
       label="応募・お問い合わせ"
       title="まずは話を聞くだけ、でも大歓迎です。"
@@ -50,15 +51,40 @@ import Phrases from './Phrases.astro';
 </section>
 
 <style>
+  /* 応募は署名メッシュのバンドにし、白いフォームカードを浮かべる */
+  .apply-sec {
+    position: relative;
+    overflow: hidden;
+    padding-block-end: 120px;
+  }
+  .apply-in {
+    position: relative;
+    z-index: 1;
+  }
+  /* SectionHead は子コンポーネントなので :global() で届かせる */
+  #apply :global(.section-label) {
+    color: #fff;
+  }
+  #apply :global(.section-head h2) {
+    color: #fff;
+    text-shadow: 0 2px 24px rgba(38, 18, 120, 0.25);
+  }
+  #apply :global(.lead) {
+    color: rgba(255, 255, 255, 0.94);
+    font-weight: 500;
+  }
+
   .apply-box {
     max-width: 40rem;
+    background: var(--paper);
     border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: 24px;
+    border-radius: 18px;
+    box-shadow: var(--shadow-lg);
+    padding: 28px 24px;
   }
   @media (min-width: 860px) {
     .apply-box {
-      padding: 36px;
+      padding: 40px;
     }
   }
   .fld {
@@ -72,7 +98,7 @@ import Phrases from './Phrases.astro';
     margin-block-end: 8px;
   }
   .req {
-    color: var(--accent-dark);
+    color: var(--accent-2);
     font-size: 12px;
     margin-inline-start: 6px;
   }
@@ -80,19 +106,22 @@ import Phrases from './Phrases.astro';
   .fld textarea {
     width: 100%;
     border: 1px solid var(--line);
-    border-radius: 2px;
+    border-radius: 10px;
     background: #fff;
     color: var(--ink);
     font: inherit;
     font-size: 16px;
     line-height: 1.6;
-    padding: 11px 13px;
+    padding: 12px 14px;
+    transition:
+      border-color 180ms var(--ease-out),
+      box-shadow 180ms var(--ease-out);
   }
   .fld input:focus,
   .fld textarea:focus {
-    outline: 2px solid var(--accent);
-    outline-offset: 0;
-    border-color: var(--ink);
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(83, 58, 253, 0.22);
   }
   .submit {
     width: 100%;
@@ -106,10 +135,11 @@ import Phrases from './Phrases.astro';
   }
   .honest {
     max-width: 40rem;
-    margin-block-start: 28px;
-    background: var(--paper-alt);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
+    margin-block-start: 24px;
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 16px;
+    box-shadow: var(--shadow-md);
     padding: 20px 24px;
     font-size: 13.5px;
     line-height: 1.85;
@@ -117,5 +147,6 @@ import Phrases from './Phrases.astro';
   }
   .honest strong {
     font-weight: 700;
+    color: var(--ink);
   }
 </style>

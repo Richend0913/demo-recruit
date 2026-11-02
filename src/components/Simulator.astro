@@ -85,18 +85,36 @@ const { days, drops } = simSpec;
 </script>
 
 <style>
-  /* 台帳パネル: 深い墨の面に、紙の文字とアンバーの数字 */
+  /* 白カード + 上端のメッシュバー。合計は indigo のディスプレイ数字 */
   .sim {
-    background: var(--ink-deep);
-    color: #ece7db;
-    border-radius: 6px;
-    padding: 28px 24px 32px;
+    position: relative;
+    background: var(--paper);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    box-shadow: var(--shadow-lg);
+    padding: 34px 24px 36px;
     max-width: 52rem;
-    box-shadow: 14px 14px 0 0 var(--amber-200);
+    overflow: hidden;
+  }
+  .sim::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(
+      90deg,
+      var(--mesh-purple) 0%,
+      var(--mesh-indigo) 38%,
+      var(--mesh-pink) 72%,
+      var(--mesh-orange) 100%
+    );
   }
   @media (min-width: 860px) {
     .sim {
-      padding: 40px 44px 44px;
+      padding: 44px 48px 48px;
     }
   }
   .sim-tag {
@@ -107,9 +125,9 @@ const { days, drops } = simSpec;
     font-weight: 600;
     font-size: 12px;
     letter-spacing: 0.28em;
-    color: var(--amber-300);
+    color: var(--accent);
     padding-block-end: 18px;
-    border-block-end: 1px solid rgba(236, 231, 219, 0.18);
+    border-block-end: 1px solid var(--line);
     margin-block-end: 26px;
   }
   .sim-tag span {
@@ -117,7 +135,7 @@ const { days, drops } = simSpec;
     font-weight: 700;
     font-size: 12.5px;
     letter-spacing: 0.14em;
-    color: #ece7db;
+    color: var(--ink);
   }
   .sim-controls {
     display: grid;
@@ -143,15 +161,16 @@ const { days, drops } = simSpec;
     font-feature-settings: 'tnum' 1;
     font-size: 16px;
     font-weight: 500;
+    color: var(--ink-2);
   }
   .sim-row label b span {
-    color: var(--amber-300);
-    font-size: 20px;
-    font-weight: 600;
+    color: var(--accent);
+    font-size: 21px;
+    font-weight: 700;
   }
   .sim-row input[type='range'] {
     width: 100%;
-    accent-color: var(--amber-300);
+    accent-color: var(--accent);
     height: 30px;
     cursor: pointer;
   }
@@ -164,11 +183,11 @@ const { days, drops } = simSpec;
   }
   .ledger th,
   .ledger td {
-    padding: 10px 2px;
-    border-block-end: 1px solid rgba(236, 231, 219, 0.14);
+    padding: 11px 2px;
+    border-block-end: 1px solid var(--line-soft);
     text-align: left;
     font-weight: 500;
-    color: #b9b2a2;
+    color: var(--ink-2);
   }
   .ledger td {
     font-family: var(--font-num);
@@ -176,41 +195,61 @@ const { days, drops } = simSpec;
     text-align: right;
     white-space: nowrap;
     padding-inline-start: 16px;
-    color: #ece7db;
+    color: var(--ink);
+    font-weight: 600;
   }
   .ledger-total th,
   .ledger-total td {
     border-block-end: 0;
-    border-block-start: 2px solid var(--amber-300);
+    border-block-start: 2px solid var(--accent);
     padding-block-start: 18px;
-    color: #f5f1e8;
+    color: var(--ink);
     font-weight: 700;
     vertical-align: baseline;
   }
   .ledger-total td {
-    font-size: 30px;
-    font-weight: 600;
+    font-size: 32px;
+    font-weight: 800;
     letter-spacing: -0.01em;
-    color: var(--amber-300);
+    color: var(--accent);
     line-height: 1.2;
   }
   @media (min-width: 860px) {
     .ledger-total td {
-      font-size: 40px;
+      font-size: 42px;
+    }
+  }
+  @media (max-width: 560px) {
+    /* モバイルはラベルと金額を縦に積む（語の途中で割れない） */
+    .ledger th,
+    .ledger td {
+      display: block;
+    }
+    .ledger th {
+      border-block-end: 0;
+      padding-block-end: 0;
+    }
+    .ledger td {
+      padding-block-start: 2px;
+      padding-inline-start: 0;
+    }
+    .ledger-total td {
+      border-block-start: 0;
+      padding-block-start: 8px;
     }
   }
   .taxnote {
     text-align: right;
     font-size: 12px;
-    color: #9a927f;
+    color: var(--ink-3);
     margin-block-start: 8px;
   }
   .sim-note {
     margin-block-start: 22px;
     padding-block-start: 18px;
-    border-block-start: 1px solid rgba(236, 231, 219, 0.14);
+    border-block-start: 1px solid var(--line-soft);
     font-size: 12.5px;
     line-height: 1.85;
-    color: #9a927f;
+    color: var(--ink-3);
   }
 </style>

@@ -29,13 +29,18 @@ import { daySteps } from '../data/content';
   .steps {
     list-style: none;
     max-width: 46rem;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    box-shadow: var(--shadow-sm);
+    padding: 8px 26px;
   }
   .step {
     padding-block: 20px;
     border-block-end: 1px solid var(--line-soft);
   }
-  .step:first-child {
-    border-block-start: 1px solid var(--line);
+  .step:last-child {
+    border-block-end: 0;
   }
   .step h3 {
     font-size: var(--fs-h3);
@@ -47,8 +52,8 @@ import { daySteps } from '../data/content';
     font-family: var(--font-num);
     font-feature-settings: 'tnum' 1;
     font-size: 14px;
-    font-weight: 600;
-    color: var(--accent-dark);
+    font-weight: 700;
+    color: var(--accent);
     letter-spacing: 0.04em;
     margin-inline-end: 12px;
     white-space: nowrap;

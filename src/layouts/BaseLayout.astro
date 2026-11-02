@@ -31,12 +31,12 @@ const base = import.meta.env.BASE_URL;
     <meta name="twitter:card" content="summary_large_image" />
     <link
       rel="icon"
-      href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23e08a2b'/><text x='32' y='45' font-size='34' font-weight='900' text-anchor='middle' fill='%231a1206' font-family='sans-serif'>配</text></svg>"
+      href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='16' fill='%23533afd'/><text x='32' y='46' font-size='36' font-weight='800' text-anchor='middle' fill='%23ffffff' font-family='sans-serif'>C</text></svg>"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;800;900&display=swap"
       rel="stylesheet"
     />
     <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-63VB4HT3T2"></script>
@@ -97,7 +97,7 @@ const base = import.meta.env.BASE_URL;
             <Phrases text="こういう「応募が来る採用の仕組み」を自社に持てます" />
           </p>
           <a
-            class="btn btn--primary btn--arrow ft-cta-btn"
+            class="btn btn--white btn--arrow ft-cta-btn"
             href={recruitLpUrl}
             target="_blank"
             rel="noopener"
@@ -128,7 +128,7 @@ const base = import.meta.env.BASE_URL;
       data-site="demo-recruit"
       data-endpoint="https://genba-ai-core.burningbros.workers.dev"
       data-name="採用受付AI"
-      data-accent="#e08a2b"
+      data-accent="#533afd"
       data-offset-bottom="56"
       data-greeting="こんにちは。軽貨物ドライバー募集について、条件や応募のご質問にお答えします（合否は担当者が判断します）。"
       defer></script>
@@ -138,7 +138,7 @@ const base = import.meta.env.BASE_URL;
 <style>
   .demo-bar {
     background: var(--ink-deep);
-    color: #cfc8ba;
+    color: #adbdcc;
     font-size: 12px;
     line-height: 1.7;
     letter-spacing: 0.04em;
@@ -156,7 +156,7 @@ const base = import.meta.env.BASE_URL;
   .demo-bar-link {
     display: inline-block;
     margin-inline-start: 10px;
-    color: var(--accent);
+    color: #a5b4ff;
     font-weight: 700;
     text-decoration: underline;
     text-underline-offset: 3px;
@@ -167,35 +167,46 @@ const base = import.meta.env.BASE_URL;
     position: sticky;
     top: 0;
     z-index: 50;
-    background: rgba(255, 255, 255, 0.96);
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border-block-end: 1px solid var(--line);
   }
   .hdr-in {
     display: flex;
     align-items: center;
     gap: 28px;
-    min-height: 60px;
+    min-height: 62px;
   }
   .brand {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    font-weight: 700;
+    font-weight: 800;
     font-size: 17px;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.02em;
     text-decoration: none;
     white-space: nowrap;
   }
   .brand::before {
-    content: '';
-    width: 10px;
-    height: 10px;
+    content: 'C';
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
     background: var(--accent);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-num);
+    font-weight: 800;
+    font-size: 15px;
+    box-shadow: 0 6px 16px rgba(10, 37, 64, 0.22);
     flex: none;
   }
   .brand-sub {
-    margin-inline-start: 10px;
-    padding-inline-start: 10px;
+    margin-inline-start: 2px;
+    padding-inline-start: 12px;
     border-inline-start: 1px solid var(--line);
     font-size: 12.5px;
     font-weight: 500;
@@ -225,19 +236,20 @@ const base = import.meta.env.BASE_URL;
   }
   .hdr-cta {
     margin-inline-start: auto;
-    background: var(--accent);
-    color: var(--accent-ink);
+    background: var(--ink);
+    color: #fff;
     text-decoration: none;
     font-weight: 700;
     font-size: 14px;
-    letter-spacing: 0.05em;
-    padding: 8px 20px;
-    border-radius: var(--radius);
+    letter-spacing: 0.04em;
+    padding: 10px 22px;
+    border-radius: 999px;
+    box-shadow: 0 8px 20px rgba(10, 37, 64, 0.24);
     white-space: nowrap;
-    transition: background-color 160ms var(--ease-out);
+    transition: background-color 180ms var(--ease-out);
   }
   .hdr-cta:hover {
-    background: var(--amber-300);
+    background: var(--accent);
   }
   @media (min-width: 860px) {
     .hdr-cta {
@@ -252,13 +264,13 @@ const base = import.meta.env.BASE_URL;
 
   .ft {
     background: var(--ink-deep);
-    color: #b7b0a2;
+    color: #adbdcc;
     padding-block: 64px 72px;
     font-size: 13px;
   }
   .ft-name {
     font-weight: 700;
-    color: #f5f1e8;
+    color: #fff;
     font-size: 14px;
   }
   .ft-note {
@@ -267,11 +279,11 @@ const base = import.meta.env.BASE_URL;
   .ft-cta {
     margin-block-start: 36px;
     padding-block-start: 32px;
-    border-block-start: 1px solid rgba(245, 241, 232, 0.16);
+    border-block-start: 1px solid rgba(255, 255, 255, 0.14);
   }
   .ft-cta-title {
     font-weight: 700;
-    color: #f5f1e8;
+    color: #fff;
     font-size: 15px;
     margin-block-end: 16px;
   }

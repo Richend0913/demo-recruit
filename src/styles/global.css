@@ -1,36 +1,41 @@
 /*
  * コスモ軽貨物 採用LP（デモ）— デザインシステム
- * 設計ブリーフ（design-brief.md）+ デザインエレベーション（2026-11-02）:
- * - タイポグラフィは離散ステップのトークン（fluid な clamp() は使わない）
- * - 階層はサイズと字間で作る。本文行間 1.75、純黒を使わない（#323232）
- * - 余白は 4px 倍数、コンテナ 1120px
- * - 色は「墨 / 温かい紙 / アンバー」の階調システムとして使う。
- *   面の分離は階調とヘアライン、奥行きはトーンのオフセットレイヤーで作る
- *   （ドロップシャドウは使わない）
- * - 数字は Inter の tabular で「台帳の数字」として見せる
+ * Direction A（2026-11-03 オーナー選定）: Stripe 系の現代的 SaaS 言語。
+ * - 署名は多色グラデーションメッシュ（紫/インディゴ/ピンク/オレンジ）。
+ *   ヒーローで主役にし、応募バンドとシミュレータのハイライトにだけ反響させる
+ * - ページ地は白 + Stripe のライトバンド #f6f9fc。墨は #0a2540
+ * - パネルは radius 18px + 二重の柔らかいレイヤーシャドウ（Stripe 実値系）
+ * - 数字は Inter の tabular。タイポグラフィは離散ステップ（clamp 不使用）
+ * - 余白は 4px 倍数、コンテナ 1120px。本文行間 1.75
  * - モーションは機能的なものだけ（≤300ms / ease-out / transform・opacity のみ）
  */
 
 :root {
-  --ink: #323232;
-  --ink-2: #595959;
-  --ink-3: #8c8c8c;
-  --ink-deep: #262019;
-  --line: #dcdcdc;
-  --line-soft: #ececec;
+  --ink: #0a2540;
+  --ink-2: #425466;
+  --ink-3: #8898aa;
+  --ink-deep: #0a2540;
+  --line: #e6ebf1;
+  --line-soft: #eef2f7;
   --paper: #ffffff;
-  --paper-alt: #f7f7f7;
-  --paper-warm: #faf5ec;
-  --paper-warm-2: #f3ecdc;
-  --accent: #e08a2b;
-  --accent-dark: #9a6206;
-  --accent-ink: #201503;
-  --accent-tint: #fdf3e3;
-  /* アンバーの階調（フィールドとレイヤー用） */
-  --amber-050: #fdf8ef;
-  --amber-100: #fbeed3;
-  --amber-200: #f5dda6;
-  --amber-300: #eda845;
+  --paper-alt: #f6f9fc;
+  --paper-warm: #f6f9fc;
+  --paper-warm-2: #e6ebf1;
+  --accent: #533afd;
+  --accent-dark: #4430d6;
+  --accent-ink: #ffffff;
+  --accent-2: #ff4d8d;
+  --accent-tint: #f6f4ff;
+  /* メッシュの色面（ヒーロー署名） */
+  --mesh-purple: #a960ee;
+  --mesh-indigo: #533afd;
+  --mesh-pink: #ff4d8d;
+  --mesh-orange: #ff8c42;
+  /* 旧エレベーション由来の変数名は新パレットへ読み替え（参照互換） */
+  --amber-050: #f6f4ff;
+  --amber-100: #e9e5ff;
+  --amber-200: #cfc6ff;
+  --amber-300: #7a5cff;
 
   --font: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans',
     'BIZ UDPGothic', 'Yu Gothic UI', Meiryo, sans-serif;
@@ -43,35 +48,43 @@
 
   /* タイプスケール（離散ステップ。860px / 1120px で段階を上げる） */
   --fs-display: 34px;
-  --fs-h2: 24px;
+  --fs-h2: 26px;
   --fs-h3: 17px;
   --fs-lead: 15.5px;
   --fs-body: 16px;
   --fs-sm: 14px;
   --fs-xs: 12.5px;
 
-  --section-pad: 64px;
-  --radius: 4px;
+  --section-pad: 72px;
+  --radius: 12px;
+  /* Stripe 系のレイヤーシャドウ */
+  --shadow-lg:
+    0 30px 60px -12px rgba(50, 50, 93, 0.25),
+    0 18px 36px -18px rgba(0, 0, 0, 0.22);
+  --shadow-md:
+    0 15px 35px rgba(50, 50, 93, 0.1),
+    0 5px 15px rgba(0, 0, 0, 0.07);
+  --shadow-sm: 0 8px 24px rgba(50, 50, 93, 0.06);
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 @media (min-width: 860px) {
   :root {
-    --fs-display: 54px;
-    --fs-h2: 30px;
+    --fs-display: 56px;
+    --fs-h2: 32px;
     --fs-h3: 18px;
-    --fs-lead: 16px;
-    --section-pad: 96px;
+    --fs-lead: 16.5px;
+    --section-pad: 104px;
   }
 }
 
 @media (min-width: 1120px) {
   :root {
-    --fs-display: 62px;
+    --fs-display: 64px;
   }
 }
 
-/* 数字（台帳・時刻・金額） */
+/* 数字（金額・時刻・件数） */
 .num {
   font-family: var(--font-num);
   font-feature-settings: 'tnum' 1;
@@ -119,7 +132,7 @@ a {
   color: inherit;
 }
 ::selection {
-  background: #f5dfba;
+  background: #d6ceff;
 }
 
 /* ---------- レイアウト ---------- */
@@ -138,19 +151,42 @@ a {
 .section {
   padding-block: var(--section-pad);
 }
-.section + .section {
-  border-block-start: 1px solid var(--line);
-}
 .section--alt {
   background: var(--paper-alt);
 }
-/* 温かい紙のバンド。バンドとの境界は階調そのもので分ける（罫は引かない） */
+/* 旧「温かい紙」バンドは Stripe ライトバンドへ読み替え */
 .section--warm {
-  background: var(--paper-warm);
+  background: var(--paper-alt);
 }
-.section--warm + .section,
-.section + .section--warm {
-  border-block-start: 0;
+
+/* 署名メッシュ（ヒーロー/応募バンド共用）。
+   多色の radial を重ね、下端はページ地へ溶かす */
+.mesh {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.mesh::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(600px 420px at 12% -6%, rgba(169, 96, 238, 0.85), rgba(169, 96, 238, 0) 62%),
+    radial-gradient(700px 480px at 46% -12%, rgba(83, 58, 253, 0.8), rgba(83, 58, 253, 0) 65%),
+    radial-gradient(640px 460px at 78% -4%, rgba(255, 77, 141, 0.7), rgba(255, 77, 141, 0) 62%),
+    radial-gradient(560px 420px at 102% 6%, rgba(255, 140, 66, 0.75), rgba(255, 140, 66, 0) 60%),
+    linear-gradient(180deg, #6d4bd8 0%, #533afd 34%, rgba(246, 249, 252, 0) 92%);
+}
+.mesh::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 52%, #fff 98%);
+}
+/* 応募バンド用: 下端はライトバンド地へ溶かす */
+.mesh--to-alt::after {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 40%, var(--paper-alt) 97%);
 }
 
 /* ---------- 見出し ---------- */
@@ -158,46 +194,48 @@ a {
 h1,
 h2,
 h3 {
-  font-weight: 700;
-  letter-spacing: 0.01em;
+  font-weight: 800;
+  letter-spacing: -0.01em;
   font-feature-settings: 'palt';
   line-break: strict;
 }
 
 .section-head {
-  margin-block-end: 40px;
+  margin-block-end: 44px;
 }
 @media (min-width: 860px) {
   .section-head {
-    margin-block-end: 48px;
+    margin-block-end: 56px;
   }
 }
 .section-label {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.18em;
-  color: var(--accent-dark);
+  letter-spacing: 0.16em;
+  color: var(--accent);
   margin-block-end: 16px;
 }
 .section-label::before {
   content: '';
-  width: 28px;
+  width: 22px;
   height: 3px;
-  background: var(--accent);
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--mesh-purple), var(--accent));
   flex: none;
 }
 .section-head h2 {
   font-size: var(--fs-h2);
-  line-height: 1.45;
+  line-height: 1.4;
+  letter-spacing: -0.015em;
 }
 .lead {
   margin-block-start: 16px;
   color: var(--ink-2);
   font-size: var(--fs-lead);
-  line-height: 1.8;
+  line-height: 1.85;
   max-width: var(--w-text);
 }
 
@@ -209,42 +247,51 @@ h3 {
   justify-content: center;
   gap: 8px;
   min-height: 52px;
-  padding: 12px 28px;
+  padding: 13px 30px;
   font-weight: 700;
-  font-size: 15px;
-  letter-spacing: 0.04em;
+  font-size: 15.5px;
+  letter-spacing: 0.03em;
   text-decoration: none;
-  border: 1px solid var(--ink);
-  border-radius: var(--radius);
+  border: 1px solid transparent;
+  border-radius: 999px;
   cursor: pointer;
   transition:
-    background-color 160ms var(--ease-out),
-    color 160ms var(--ease-out),
-    border-color 160ms var(--ease-out);
+    background-color 180ms var(--ease-out),
+    color 180ms var(--ease-out),
+    box-shadow 180ms var(--ease-out),
+    transform 180ms var(--ease-out);
 }
 .btn--primary {
   background: var(--accent);
-  border-color: var(--accent);
   color: var(--accent-ink);
+  box-shadow: 0 10px 24px rgba(83, 58, 253, 0.35);
 }
 .btn--primary:hover {
-  background: var(--amber-300);
-  border-color: var(--amber-300);
+  background: var(--accent-dark);
+  box-shadow: 0 14px 30px rgba(83, 58, 253, 0.4);
+}
+.btn--white {
+  background: #fff;
+  color: var(--accent);
+  box-shadow: 0 14px 30px rgba(38, 18, 120, 0.3);
+}
+.btn--white:hover {
+  box-shadow: 0 18px 38px rgba(38, 18, 120, 0.36);
 }
 .btn--ghost {
   background: transparent;
   color: var(--ink);
+  border-color: var(--line);
 }
 .btn--ghost:hover {
-  background: var(--ink);
-  color: #fff;
+  border-color: var(--ink-3);
 }
 /* 矢印付きボタン: グリフが少しだけ進む */
 .btn--arrow::after {
   content: '→';
   font-family: var(--font-num);
   font-weight: 600;
-  transition: transform 160ms var(--ease-out);
+  transition: transform 180ms var(--ease-out);
 }
 .btn--arrow:hover::after {
   transform: translateX(3px);
@@ -259,21 +306,45 @@ h3 {
   letter-spacing: 0.03em;
   color: var(--ink);
   text-decoration: underline;
-  text-decoration-color: var(--amber-200);
+  text-decoration-color: #cfc6ff;
   text-decoration-thickness: 2px;
   text-underline-offset: 6px;
-  transition: text-decoration-color 160ms var(--ease-out);
+  transition: text-decoration-color 180ms var(--ease-out);
 }
 .tlink::after {
   content: '→';
   font-family: var(--font-num);
   font-weight: 600;
-  color: var(--accent-dark);
-  transition: transform 160ms var(--ease-out);
+  color: var(--accent);
+  transition: transform 180ms var(--ease-out);
 }
 .tlink:hover {
   text-decoration-color: var(--accent);
 }
 .tlink:hover::after {
   transform: translateX(3px);
+}
+/* メッシュ上の副導線（白） */
+.tlink--light {
+  color: #fff;
+  text-decoration-color: rgba(255, 255, 255, 0.55);
+}
+.tlink--light::after {
+  color: #fff;
+}
+.tlink--light:hover {
+  text-decoration-color: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

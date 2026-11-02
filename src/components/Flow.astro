@@ -29,29 +29,38 @@ import { flowSteps } from '../data/content';
   .steps {
     list-style: none;
     max-width: 46rem;
+    display: grid;
+    gap: 16px;
   }
   .step {
     display: grid;
-    grid-template-columns: 3.2em 1fr;
-    gap: 16px;
-    padding-block: 22px;
-    border-block-end: 1px solid var(--line-soft);
-  }
-  .step:first-child {
-    border-block-start: 1px solid var(--line);
+    grid-template-columns: auto 1fr;
+    gap: 18px;
+    align-items: start;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    box-shadow: var(--shadow-sm);
+    padding: 22px 24px;
   }
   .step-no {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
     font-family: var(--font-num);
     font-feature-settings: 'tnum' 1;
-    font-size: 26px;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-    color: var(--accent);
-    line-height: 1.2;
-    padding-block-start: 1px;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    box-shadow: 0 8px 18px rgba(83, 58, 253, 0.32);
   }
   .step h3 {
     font-size: var(--fs-h3);
+    padding-block-start: 8px;
   }
   .step p {
     color: var(--ink-2);

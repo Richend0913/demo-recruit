@@ -23,11 +23,18 @@ import { faqItems } from '../data/content';
 <style>
   .faq-list {
     max-width: 46rem;
-    border-block-start: 1px solid var(--line);
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    box-shadow: var(--shadow-sm);
+    padding: 4px 26px;
   }
   details {
     border-block-end: 1px solid var(--line-soft);
     padding-block: 20px;
+  }
+  details:last-child {
+    border-block-end: 0;
   }
   summary {
     font-weight: 700;
@@ -46,7 +53,7 @@ import { faqItems } from '../data/content';
   summary::after {
     content: '＋';
     font-weight: 400;
-    color: var(--accent-dark);
+    color: var(--accent);
     font-size: 15px;
     flex: none;
   }

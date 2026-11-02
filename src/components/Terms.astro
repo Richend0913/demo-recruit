@@ -4,7 +4,7 @@ import Phrases from './Phrases.astro';
 import { terms } from '../data/content';
 ---
 
-<section class="section" id="terms">
+<section class="section section--alt" id="terms">
   <div class="container">
     <SectionHead
       label="条件開示"
@@ -31,20 +31,24 @@ import { terms } from '../data/content';
 </section>
 
 <style>
+  /* 条件はライトバンド上の白カード（スペックシート）として置く */
   .tbl {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
     font-size: 15px;
     background: var(--paper);
-    border-block-start: 2px solid var(--ink);
-    border-block-end: 1px solid var(--ink);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
   }
   .tbl th,
   .tbl td {
-    padding: 16px 4px;
+    padding: 18px 22px;
     text-align: left;
     vertical-align: top;
-    border-block-end: 1px solid var(--line-soft);
+    border-block-end: 1px solid var(--line);
     line-height: 1.7;
   }
   .tbl tr:last-child th,
@@ -54,9 +58,11 @@ import { terms } from '../data/content';
   .tbl th {
     width: 26%;
     font-weight: 700;
-    color: var(--ink);
+    font-size: 13.5px;
+    color: var(--ink-2);
     letter-spacing: 0.03em;
-    padding-inline-end: 24px;
+    background: #fbfcfe;
+    border-inline-end: 1px solid var(--line);
     white-space: nowrap;
   }
   .tbl td {
@@ -80,13 +86,14 @@ import { terms } from '../data/content';
     }
     .tbl th {
       font-size: 13px;
-      padding-block: 16px 0;
-      padding-inline-end: 0;
+      padding-block: 14px 22px 0;
+      background: var(--paper);
+      border-inline-end: 0;
       border-block-end: 0;
     }
     .tbl td {
       font-size: 14px;
-      padding-block: 4px 16px;
+      padding-block: 2px 22px 16px;
     }
   }
 </style>
