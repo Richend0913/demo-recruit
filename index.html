@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>軽貨物ドライバー募集（業務委託）｜コスモ軽貨物（採用LP制作デモ・架空）</title>
+<meta name="description" content="軽貨物委託ドライバー募集のサンプルLP。手取りシミュレータ・正直な条件開示・AI応募受付を搭載。">
+<meta name="robots" content="noindex,nofollow">
+<meta property="og:title" content="軽貨物ドライバー募集（業務委託）｜コスモ軽貨物（採用LP制作デモ）">
+<meta property="og:description" content="「月◯万可能！」ではなく、経費を引いた後の収入目安をシミュレータで正直に開示する採用LPのデモです（架空の会社・数字はサンプル）。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://richend0913.github.io/demo-recruit/">
+<meta property="og:image" content="https://richend0913.github.io/demo-recruit/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23e08a2b'/><text x='32' y='45' font-size='34' font-weight='900' text-anchor='middle' fill='%231a1206' font-family='sans-serif'>配</text></svg>">
+<style>
+:root{
+--c-accent:#e08a2b; --c-accent-dark:#b96f1e; --c-accent-ink:#1a1206; --c-accent-soft:#fdf3e3;
+--c-bg:#ffffff; --c-surface:#f6f7f9; --c-surface-2:#eef0f3;
+--c-ink:#1c1f24; --c-ink-soft:#5a6068; --c-line:#e3e6ea;
+--font-display:"Noto Sans JP","Hiragino Kaku Gothic ProN","BIZ UDPGothic",Meiryo,sans-serif;
+--font-body:"Noto Sans JP","Hiragino Kaku Gothic ProN","BIZ UDPGothic",Meiryo,sans-serif;
+--radius:8px; --sp-1:8px;--sp-2:16px;--sp-3:24px;--sp-4:32px;--sp-6:48px;--sp-8:64px;--sp-12:96px;
+--w-content:1000px; --w-text:34em;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--c-bg);color:var(--c-ink);font-size:16px;line-height:1.9;letter-spacing:.02em;line-break:strict;overflow-wrap:anywhere;text-wrap:pretty;padding-block-end:calc(72px + env(safe-area-inset-bottom))}
+@media(min-width:768px){body{padding-block-end:0}}
+img{max-width:100%;height:auto;display:block}a{color:inherit}
+h1,h2,h3{font-family:var(--font-display);font-weight:900;line-height:1.45;letter-spacing:.01em;font-feature-settings:"palt";text-wrap:balance;overflow-wrap:normal;word-break:normal}
+h2{font-size:clamp(22px,4.6vw,32px);margin-block-end:var(--sp-3)}
+h3{font-size:clamp(16px,3vw,19px);margin-block-end:var(--sp-1)}
+.ph{display:inline-block}p{max-width:var(--w-text)}
+.container{max-width:var(--w-content);margin-inline:auto;padding-inline:20px}
+section{padding-block:var(--sp-8)}@media(min-width:768px){section{padding-block:var(--sp-12)}}
+.eyebrow{color:var(--c-accent-dark);font-size:13px;letter-spacing:.16em;font-weight:700;display:block;margin-block-end:var(--sp-1)}
+.lead{font-size:clamp(15px,2.3vw,18px);color:var(--c-ink-soft);max-width:var(--w-text)}
+.demo-bar{background:#1c1f24;color:#e8e4da;font-size:12px;text-align:center;padding:7px 12px;line-height:1.5}
+.demo-bar b{color:var(--c-accent)}
+.demo-bar a{color:var(--c-accent);font-weight:700}
+.hdr{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-block-end:1px solid var(--c-line)}
+.hdr.in{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:56px}
+.brand{font-family:var(--font-display);font-weight:900;font-size:17px;text-decoration:none;white-space:nowrap}
+.hdr.cta{background:var(--c-accent);color:var(--c-accent-ink);text-decoration:none;padding:9px 16px;border-radius:6px;font-size:14px;font-weight:900;white-space:nowrap;flex:0 0 auto}
+@media(max-width:420px){.brand{font-size:15px}}
+@media(max-width:374px){.brand.brand-sub{display:none}}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:13px 28px;border-radius:var(--radius);font-weight:900;font-size:16px;text-decoration:none;border:1px solid transparent;cursor:pointer}
+.btn-primary{background:var(--c-accent);color:var(--c-accent-ink)}.btn-ghost{border-color:var(--c-line);color:var(--c-ink);background:#fff}
+/* hero */
+.hero{background:linear-gradient(180deg,var(--c-accent-soft),#fff 78%);border-block-end:1px solid var(--c-line)}
+.hero.container{padding-block:var(--sp-8)}
+@media(min-width:768px){.hero.container{padding-block:var(--sp-12)}}
+.hero h1{font-size:clamp(28px,7vw,50px);line-height:1.4}
+.hero h1.hl{color:var(--c-accent-dark)}
+.hero.sub{margin-block-start:var(--sp-3);color:var(--c-ink-soft);max-width:30em}
+.hero.btns{display:flex;gap:12px;flex-wrap:wrap;margin-block-start:var(--sp-4)}
+.hero.specs{display:grid;gap:1px;background:var(--c-line);border:1px solid var(--c-line);border-radius:var(--radius);overflow:hidden;margin-block-start:var(--sp-4)}
+@media(min-width:768px){.hero.specs{grid-template-columns:repeat(3,1fr)}}
+.spec{background:#fff;padding:14px 18px}
+.spec.k{font-size:12px;color:var(--c-ink-soft);font-weight:700;letter-spacing:.08em}
+.spec.v{font-family:var(--font-display);font-weight:900;font-size:clamp(18px,3.4vw,24px);margin-block-start:2px}
+.spec.v small{font-size:12px;font-weight:700;color:var(--c-ink-soft)}
+.hero.facts{display:flex;gap:var(--sp-4);flex-wrap:wrap;margin-block-start:var(--sp-4)}
+.fact.n{font-family:var(--font-display);font-weight:900;font-size:clamp(20px,4vw,28px);color:var(--c-accent-dark);font-variant-numeric:tabular-nums}
+.fact.l{font-size:12px;color:var(--c-ink-soft)}
+/* appeal cards */
+.cards{display:grid;gap:var(--sp-3);margin-block-start:var(--sp-4)}
+@media(min-width:768px){.cards{grid-template-columns:1fr 1fr}}
+.card{background:#fff;border:1px solid var(--c-line);border-radius:12px;padding:var(--sp-3)}
+.card.ic{font-size:22px;margin-block-end:6px}
+.card p{color:var(--c-ink-soft);font-size:14.5px;margin-block-start:3px}
+/* simulator */
+.sim{background:#fff;border:1px solid var(--c-line);border-radius:12px;padding:clamp(20px,4vw,var(--sp-6));margin-block-start:var(--sp-4);box-shadow:0 2px 14px rgba(28,31,36,.05)}
+.sim.row{margin-block-end:var(--sp-3)}
+.sim label{display:flex;justify-content:space-between;font-size:14px;font-weight:700;margin-block-end:8px}
+.sim label b{color:var(--c-accent-dark);font-variant-numeric:tabular-nums}
+.sim input[type=range]{width:100%;accent-color:var(--c-accent);height:28px}
+.sim.out{margin-block-start:var(--sp-3);border-top:1px solid var(--c-line);padding-top:var(--sp-3);display:grid;gap:6px;font-size:14px;color:var(--c-ink-soft)}
+.sim.out.line{display:flex;justify-content:space-between;font-variant-numeric:tabular-nums}
+.sim.out.take{display:flex;justify-content:space-between;align-items:baseline;margin-top:8px;padding-top:10px;border-top:1px dashed var(--c-line)}
+.sim.out.take b{font-family:var(--font-display);font-weight:900;font-size:clamp(24px,5vw,34px);color:var(--c-accent-dark);font-variant-numeric:tabular-nums}
+.sim.out.taxnote{font-size:12px;color:var(--c-accent-dark);margin-block-start:6px;line-height:1.6;max-width:none;text-align:right}
+.sim.note{font-size:12px;color:var(--c-ink-soft);margin-block-start:var(--sp-2);line-height:1.7}
+/* table */
+.tbl{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--c-line);border-radius:var(--radius);overflow:hidden;margin-block-start:var(--sp-4);font-size:14.5px}
+.tbl th,.tbl td{padding:13px 16px;border-block-end:1px solid var(--c-line);text-align:left;vertical-align:top}
+.tbl th{width:38%;color:var(--c-ink-soft);font-weight:700;background:var(--c-surface)}
+.tbl tr:last-child th,.tbl tr:last-child td{border-block-end:0}
+/* steps */
+.steps{counter-reset:s;display:grid;gap:var(--sp-3);margin-block-start:var(--sp-4)}
+@media(min-width:768px){.steps{grid-template-columns:1fr 1fr}}
+.step{position:relative;padding-inline-start:50px}
+.step::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:0;width:34px;height:34px;border-radius:50%;background:var(--c-accent);color:var(--c-accent-ink);font-family:var(--font-display);font-weight:900;display:grid;place-items:center}
+.step p{color:var(--c-ink-soft);font-size:14px;margin-block-start:3px}
+/* faq */
+.faq details{background:#fff;border:1px solid var(--c-line);border-radius:var(--radius);padding:14px 18px;margin-block-start:12px}
+.faq summary{font-weight:700;cursor:pointer}
+.faq p{color:var(--c-ink-soft);font-size:14px;margin-block-start:8px}
+/* apply */
+.apply{background:var(--c-surface);border-block:1px solid var(--c-line)}
+.apply.box{background:#fff;border:1px solid var(--c-line);border-radius:var(--radius);padding:var(--sp-3);margin-block-start:var(--sp-3)}
+.apply input,.apply textarea{width:100%;background:#fff;border:1px solid var(--c-line);border-radius:6px;color:var(--c-ink);padding:11px 13px;font:inherit;font-size:16px;margin-block-start:6px}
+.apply.fld{margin-block-end:var(--sp-2)}
+.apply.fld label{font-size:13px;color:var(--c-ink-soft);font-weight:700}
+.honest{background:var(--c-accent-soft);border:1px solid #ecd9b8;border-radius:var(--radius);padding:var(--sp-3);margin-block-start:var(--sp-4);font-size:13.5px;color:#6b5322}
+.honest b{color:#43320e}
+.ft{background:var(--c-surface);color:var(--c-ink-soft);font-size:12.5px;padding-block:var(--sp-6);border-block-start:1px solid var(--c-line)}
+.bar{position:fixed;inset-inline:0;bottom:0;z-index:60;display:flex;box-shadow:0 -2px 16px rgba(28 31 36 /.08);background:#fff;border-block-start:1px solid var(--c-line);padding-bottom:env(safe-area-inset-bottom)}
+.bar a{flex:1;min-height:56px;display:grid;place-items:center;font-weight:900;font-size:15px;text-decoration:none}
+.bar.l{background:#fff;color:var(--c-ink)}.bar.p{background:var(--c-accent);color:var(--c-accent-ink)}
+@media(min-width:768px){.bar{display:none}}
+.reveal{opacity:0;transform:translateY(16px);transition:.6s cubic-bezier(.2,.7,.2,1)}.reveal.in{opacity:1;transform:none}
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-63VB4HT3T2"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-63VB4HT3T2');</script>
+</head>
+<body>
+<div class="demo-bar">これは <b>採用LP制作デモ</b> です・<b>架空の会社</b>（実在しません）・数字はサンプル・制作：株式会社MIMORIA　<a href="https://richend0913.github.io/burning-recruit-lp/?utm_source=demo&utm_medium=referral&utm_campaign=demo-recruit" onclick="gtag('event','generate_lead',{method:'demo'})">→ MIMORIA RECRUIT（採用支援）を見る</a></div>
+
+<header class="hdr"><div class="container in">
+<a class="brand" href="#top">コスモ軽貨物<span class="brand-sub" style="color:var(--c-accent-dark)">｜ドライバー募集</span></a>
+<a class="cta" href="#apply" onclick="gtag('event','generate_lead',{method:'apply'})">応募する</a>
+</div></header>
+
+<section class="hero" id="top" style="padding:0">
+<div class="container">
+<span class="eyebrow">業務委託ドライバー募集（軽貨物）</span>
+<h1><span class="ph">手取りの現実を、</span><span class="ph"><span class="hl">正直に</span>お見せします。</span></h1>
+<p class="sub">「月◯万可能！」ではなく、経費を引いた後の手取りをシミュレータで。あなたの稼働に合わせて、いくら残るかを先に確かめてください。未経験・普通免許でOK、同乗研修あり。</p>
+<div class="specs">
+<div class="spec"><div class="k">職種</div><div class="v">軽貨物ドライバー<small>（業務委託）</small></div></div>
+<div class="spec"><div class="k">報酬</div><div class="v">1配達 150円〜<small>（完全出来高・手取り目安は試算で）</small></div></div>
+<div class="spec"><div class="k">勤務地</div><div class="v">東京都・神奈川県<small>（架空）</small></div></div>
+</div>
+<div class="btns">
+<a class="btn btn-primary" href="#sim">手取りを試算する</a>
+<a class="btn btn-ghost" href="#terms">条件を全部見る</a>
+</div>
+<div class="facts">
+<div class="fact"><div class="n">未経験可</div><div class="l">同乗研修3〜5日</div></div>
+<div class="fact"><div class="n">週2〜OK</div><div class="l">稼働日は相談</div></div>
+<div class="fact"><div class="n">最短3日</div><div class="l">応募→稼働開始（サンプル）</div></div>
+</div>
+</div>
+</section>
+
+<section id="appeal">
+<div class="container">
+<span class="eyebrow">仕事の魅力</span>
+<h2><span class="ph">良いことも、経費も、</span><span class="ph">先に全部見せます。</span></h2>
+<div class="cards">
+<div class="card reveal"><div class="ic">🧾</div><h3>手取りまで正直に開示</h3><p>売上だけでなく、リース・ガソリン・保険・手数料まで引いた「残る金額」をシミュレータで先に確認できます。入ってから「思っていたのと違う」をなくすための開示です。</p></div>
+<div class="card reveal"><div class="ic">🔰</div><h3>未経験から始められる</h3><p>必要なのは普通自動車免許（AT可）だけ。最初の3〜5日は先輩ドライバーが同乗し、積み方・配達の流れ・アプリの使い方を一緒に覚えます。</p></div>
+<div class="card reveal"><div class="ic">🗓️</div><h3>自分のペースで働ける</h3><p>週2日〜の稼働も相談OK。休憩は自分のペースで取れ、掛け持ち・副業も可能です。1人で黙々と配達したい方に向いています。</p></div>
+<div class="card reveal"><div class="ic">📄</div><h3>違約金なし・書面で明示</h3><p>契約は1年更新で、中途解約の違約金はありません（リース車は返却）。業務内容・報酬・支払期日は契約時に書面（電磁的方法）で明示します。</p></div>
+</div>
+</div>
+</section>
+
+<section id="terms" style="background:var(--c-surface);border-block:1px solid var(--c-line)">
+<div class="container">
+<span class="eyebrow">条件開示（隠しません）</span>
+<h2>募集条件</h2>
+<table class="tbl">
+<tr><th>雇用形態</th><td><b>業務委託</b>（雇用ではありません。社会保険・雇用保険・有給はありません）</td></tr>
+<tr><th>報酬体系</th><td>完全出来高（1配達 150円〜／エリア・案件で変動・サンプル）。締め翌月末払い</td></tr>
+<tr><th>あなたの負担（経費）</th><td>車両リース 月40,000円／ガソリン／任意保険・貨物保険 月18,000円／業務委託手数料 売上の10%</td></tr>
+<tr><th>契約期間・違約金</th><td>1年更新。中途解約の違約金なし（リース車は返却）</td></tr>
+<tr><th>必要なもの</th><td>普通自動車免許（AT可）。黒ナンバー登録はこちらで案内・サポート</td></tr>
+<tr><th>未経験</th><td>可。先輩ドライバーの同乗研修3〜5日あり</td></tr>
+<tr><th>稼働エリア</th><td>東京都・神奈川県（架空）。希望を伺います</td></tr>
+<tr><th>契約時</th><td>業務内容・報酬・支払期日を書面（電磁的方法）で明示します（フリーランス新法対応）</td></tr>
+</table>
+</div>
+</section>
+
+<section id="day">
+<div class="container">
+<span class="eyebrow">1日の流れ</span>
+<h2>だいたいこんな感じです</h2>
+<div class="steps">
+<div class="step reveal"><h3>朝 8:00 センター集荷</h3><p>その日の荷物を積み込み、配送ルートを確認。</p></div>
+<div class="step reveal"><h3>午前〜午後 配達</h3><p>担当エリアを配達。休憩は自分のペースで。</p></div>
+<div class="step reveal"><h3>夕方 追加便（任意）</h3><p>余力があればスポット便で上乗せも可能。</p></div>
+<div class="step reveal"><h3>終業 実績報告</h3><p>アプリで件数を報告して終了。</p></div>
+</div>
+</div>
+</section>
+
+<section id="sim" style="background:var(--c-surface);border-block:1px solid var(--c-line)">
+<div class="container">
+<span class="eyebrow">手取りシミュレータ</span>
+<h2><span class="ph">経費を引いた後の、</span><span class="ph">リアルな手取り。</span></h2>
+<p class="lead">スライダーを動かすと、売上から車両リース・ガソリン・保険・手数料を引いた手取り目安が出ます（サンプル単価・実額は面談で確定）。</p>
+<div class="sim reveal">
+<div class="row">
+<label for="days">月の稼働日数 <b><span id="vDays">22</span> 日</b></label>
+<input id="days" type="range" min="10" max="26" value="22">
+</div>
+<div class="row">
+<label for="drops">1日の平均配達件数 <b><span id="vDrops">120</span> 件</b></label>
+<input id="drops" type="range" min="60" max="180" value="120" step="10">
+</div>
+<div class="out">
+<div class="line"><span>売上（1件 単価150円・サンプル）</span><span id="oRev">—</span></div>
+<div class="line"><span>− 車両リース（月）</span><span>−¥40,000</span></div>
+<div class="line"><span>− ガソリン（稼働日×700円）</span><span id="oGas">—</span></div>
+<div class="line"><span>− 任意保険・貨物保険（月）</span><span>−¥18,000</span></div>
+<div class="line"><span>− 業務委託手数料（売上の10%）</span><span id="oFee">—</span></div>
+<div class="take"><span>経費差引後の収入目安（月・税引前）</span><b id="oTake">—</b></div>
+<p class="taxnote">※ 税金・国民健康保険・国民年金・確定申告前の金額です</p>
+</div>
+<p class="note">※ 単価・件数・経費はデモ用のサンプル値です。実際の単価表・経費は面談で正直にお伝えします。表示額には所得税・住民税・国民健康保険・国民年金は含まれません（ご自身での確定申告が必要です）。収入は稼働状況で上下し、金額を保証するものではありません。</p>
+</div>
+</div>
+</section>
+
+<section id="flow">
+<div class="container">
+<span class="eyebrow">応募の流れ</span>
+<h2>応募から稼働開始まで</h2>
+<div class="steps">
+<div class="step reveal"><h3>応募する</h3><p>このページのフォーム・お電話・右下のAI応募受付から、いつでも応募できます。「話を聞くだけ」でもOKです。</p></div>
+<div class="step reveal"><h3>担当者からご連絡</h3><p>24時間以内に担当者からご連絡します（デモ）。AIが合否を決めることはありません。</p></div>
+<div class="step reveal"><h3>面談</h3><p>条件・単価表・経費を書面で明示してお話しします。合わないと感じたら、その場で断っていただいて構いません。</p></div>
+<div class="step reveal"><h3>同乗研修 → 稼働開始</h3><p>先輩ドライバーの同乗研修（3〜5日）を経て稼働開始。応募から最短3日（サンプル）です。</p></div>
+</div>
+</div>
+</section>
+
+<section id="faq" style="background:var(--c-surface);border-block:1px solid var(--c-line)">
+<div class="container">
+<span class="eyebrow">よくある質問</span>
+<h2>気になること</h2>
+<div class="faq">
+<details><summary>本当に未経験でも大丈夫ですか？</summary><p>はい。普通免許があれば応募できます。最初の3〜5日は先輩が同乗して、積み方・配達の流れ・アプリの使い方をお教えします。</p></details>
+<details><summary>収入は保証されますか？</summary><p>いいえ。完全出来高のため保証はありません。上のシミュレータで、経費を引いた後の手取りの目安をご確認ください（実額は稼働状況で上下します）。</p></details>
+<details><summary>外国籍でも応募できますか？</summary><p>応募いただけます。在留資格や就労可否は、会社が面談時に確認します（応募の段階で判定はしません）。</p></details>
+<details><summary>掛け持ち・副業は可能ですか？</summary><p>業務委託ですので、稼働日数はご相談のうえ決めます。週2日〜の稼働も可能です。</p></details>
+</div>
+</div>
+</section>
+
+<section id="apply" class="apply" style="scroll-margin-top:56px;background:#fff;border-block:0">
+<div class="container">
+<span class="eyebrow">応募・お問い合わせ</span>
+<h2><span class="ph">まずは話を聞くだけ、</span><span class="ph">でも大歓迎です。</span></h2>
+<p class="lead">右下のAI応募受付で、いつでも質問・応募できます。合否はAIでは決まりません（担当者が面談します）。お電話でもどうぞ。</p>
+<div class="box">
+<form onsubmit="event.preventDefault();gtag('event','generate_lead',{method:'apply'});this.style.display='none';document.getElementById('done').style.display='block';">
+<div class="fld"><label>お名前 <span style="color:var(--c-accent-dark)">必須</span></label><input required placeholder="山田 太郎"></div>
+<div class="fld"><label>ご連絡先（電話 or メール）<span style="color:var(--c-accent-dark)">必須</span></label><input required placeholder="090-0000-0000"></div>
+<div class="fld"><label>ひとこと（わかる範囲でOK）</label><textarea rows="2" placeholder="未経験ですが興味あります／希望エリアなど"></textarea></div>
+<button class="btn btn-primary" type="submit" style="width:100%">この内容で応募する（デモ）</button>
+</form>
+<div id="done" style="display:none;color:#1e7a3c;font-size:14px;text-align:center;padding:12px">応募を受け付けました（デモ）。実際のLPでは担当者に通知が届き、24時間以内にご連絡します。</div>
+</div>
+<div class="honest">
+<b>正直にお伝えします。</b> これは業務委託であり、雇用ではありません（社会保険・雇用保険・有給はありません）。収入は出来高で、金額の保証はありません。車両リース・ガソリン・保険などの経費がかかります。上記はすべて事実です。合わないと感じたら、無理にお勧めしません。
+</div>
+</div>
+</section>
+
+<footer class="ft"><div class="container">
+<p>コスモ軽貨物（架空・採用LP制作デモ）｜業務委託ドライバー募集</p>
+<p style="margin-block-start:8px">応募者の個人情報は、応募対応・選考の目的のみに利用します。／ 制作：株式会社MIMORIA</p>
+<p style="margin-block-start:16px;padding-block-start:16px;border-block-start:1px solid var(--c-line)">
+<span style="display:block;font-weight:700;color:var(--c-ink);margin-block-end:6px">こういう「応募が来る採用の仕組み」を自社に持てます</span>
+<a href="https://richend0913.github.io/burning-recruit-lp/?utm_source=demo&utm_medium=referral&utm_campaign=demo-recruit" target="_blank" rel="noopener" onclick="gtag('event','generate_lead',{method:'demo'})" style="display:inline-block;background:#e08a2b;color:#1a1205;text-decoration:none;font-weight:700;font-size:14px;padding:10px 20px;border-radius:6px">→ MIMORIA RECRUIT（採用支援）を見る</a>
+</p>
+</div></footer>
+
+<div class="bar">
+<a class="l" href="tel:0300000000" onclick="gtag('event','generate_lead',{method:'tel'})">電話で相談</a>
+<a class="p" href="#apply" onclick="gtag('event','generate_lead',{method:'apply'})">応募する</a>
+</div>
+
+<!-- AI応募受付（genba-ai-core・type:recruit）※現デモから踏襲 -->
+<script src="widget.js"
+data-site="demo-recruit"
+data-endpoint="https://genba-ai-core.burningbros.workers.dev"
+data-name="採用受付AI"
+data-accent="#e08a2b"
+data-offset-bottom="56"
+data-greeting="こんにちは。軽貨物ドライバー募集について、条件や応募のご質問にお答えします（合否は担当者が判断します）。" defer></script>
+
+<script>
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.14});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+// 手取りシミュレータ（サンプル値・決定的）— 現デモの計算仕様を踏襲
+const yen=n=>"¥"+Math.round(n).toLocaleString("ja-JP");
+const days=document.getElementById('days'),drops=document.getElementById('drops');
+function calc(){
+const d=+days.value, k=+drops.value;
+document.getElementById('vDays').textContent=d;
+document.getElementById('vDrops').textContent=k;
+const rev=d*k*150; // 売上: 稼働日×件数×単価150
+const gas=d*700; // ガソリン
+const lease=40000, ins=18000;
+const fee=rev*0.10; // 手数料10%
+const take=rev-lease-gas-ins-fee;
+document.getElementById('oRev').textContent=yen(rev);
+document.getElementById('oGas').textContent="−"+yen(gas);
+document.getElementById('oFee').textContent="−"+yen(fee);
+document.getElementById('oTake').textContent=yen(take);
+}
+days.addEventListener('input',calc);drops.addEventListener('input',calc);calc();
+</script>
+</body>
+</html>
