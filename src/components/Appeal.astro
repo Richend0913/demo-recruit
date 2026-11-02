@@ -39,10 +39,21 @@ import { appealPoints } from '../data/content';
     border-block-start: 1px solid var(--line);
   }
   .point dt {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
     font-size: var(--fs-h3);
     font-weight: 700;
     letter-spacing: 0.02em;
     line-height: 1.6;
+  }
+  .point dt::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
+    flex: none;
+    transform: translateY(-1px);
   }
   .point dd {
     color: var(--ink-2);

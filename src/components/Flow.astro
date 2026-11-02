@@ -41,11 +41,14 @@ import { flowSteps } from '../data/content';
     border-block-start: 1px solid var(--line);
   }
   .step-no {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--ink-3);
-    font-variant-numeric: tabular-nums;
-    padding-block-start: 3px;
+    font-family: var(--font-num);
+    font-feature-settings: 'tnum' 1;
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--accent);
+    line-height: 1.2;
+    padding-block-start: 1px;
   }
   .step h3 {
     font-size: var(--fs-h3);

@@ -1,37 +1,49 @@
 /*
  * コスモ軽貨物 採用LP（デモ）— デザインシステム
- * 設計ブリーフ（design-brief.md）準拠:
+ * 設計ブリーフ（design-brief.md）+ デザインエレベーション（2026-11-02）:
  * - タイポグラフィは離散ステップのトークン（fluid な clamp() は使わない）
  * - 階層はサイズと字間で作る。本文行間 1.75、純黒を使わない（#323232）
  * - 余白は 4px 倍数、コンテナ 1120px
- * - 色はアクセント1色。面の分離は階調とヘアラインのみ、影は使わない
- * - モーションは機能的なものだけ（≤300ms / ease-out / 色の遷移のみ）
+ * - 色は「墨 / 温かい紙 / アンバー」の階調システムとして使う。
+ *   面の分離は階調とヘアライン、奥行きはトーンのオフセットレイヤーで作る
+ *   （ドロップシャドウは使わない）
+ * - 数字は Inter の tabular で「台帳の数字」として見せる
+ * - モーションは機能的なものだけ（≤300ms / ease-out / transform・opacity のみ）
  */
 
 :root {
   --ink: #323232;
   --ink-2: #595959;
   --ink-3: #8c8c8c;
+  --ink-deep: #262019;
   --line: #dcdcdc;
   --line-soft: #ececec;
   --paper: #ffffff;
   --paper-alt: #f7f7f7;
+  --paper-warm: #faf5ec;
+  --paper-warm-2: #f3ecdc;
   --accent: #e08a2b;
   --accent-dark: #9a6206;
   --accent-ink: #201503;
   --accent-tint: #fdf3e3;
+  /* アンバーの階調（フィールドとレイヤー用） */
+  --amber-050: #fdf8ef;
+  --amber-100: #fbeed3;
+  --amber-200: #f5dda6;
+  --amber-300: #eda845;
 
   --font: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans',
     'BIZ UDPGothic', 'Yu Gothic UI', Meiryo, sans-serif;
+  --font-num: 'Inter', 'Noto Sans JP', sans-serif;
   --font-mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas,
     'Noto Sans Mono', monospace;
 
   --w-wide: 1120px;
   --w-text: 42rem;
 
-  /* タイプスケール（離散ステップ。860px で一段上げる） */
-  --fs-display: 30px;
-  --fs-h2: 23px;
+  /* タイプスケール（離散ステップ。860px / 1120px で段階を上げる） */
+  --fs-display: 34px;
+  --fs-h2: 24px;
   --fs-h3: 17px;
   --fs-lead: 15.5px;
   --fs-body: 16px;
@@ -45,12 +57,25 @@
 
 @media (min-width: 860px) {
   :root {
-    --fs-display: 40px;
-    --fs-h2: 28px;
+    --fs-display: 54px;
+    --fs-h2: 30px;
     --fs-h3: 18px;
     --fs-lead: 16px;
     --section-pad: 96px;
   }
+}
+
+@media (min-width: 1120px) {
+  :root {
+    --fs-display: 62px;
+  }
+}
+
+/* 数字（台帳・時刻・金額） */
+.num {
+  font-family: var(--font-num);
+  font-feature-settings: 'tnum' 1;
+  letter-spacing: 0;
 }
 
 *,
@@ -119,6 +144,14 @@ a {
 .section--alt {
   background: var(--paper-alt);
 }
+/* 温かい紙のバンド。バンドとの境界は階調そのもので分ける（罫は引かない） */
+.section--warm {
+  background: var(--paper-warm);
+}
+.section--warm + .section,
+.section + .section--warm {
+  border-block-start: 0;
+}
 
 /* ---------- 見出し ---------- */
 
@@ -140,11 +173,21 @@ h3 {
   }
 }
 .section-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 700;
   letter-spacing: 0.18em;
-  color: var(--ink-3);
+  color: var(--accent-dark);
   margin-block-end: 16px;
+}
+.section-label::before {
+  content: '';
+  width: 28px;
+  height: 3px;
+  background: var(--accent);
+  flex: none;
 }
 .section-head h2 {
   font-size: var(--fs-h2);
@@ -185,8 +228,8 @@ h3 {
   color: var(--accent-ink);
 }
 .btn--primary:hover {
-  background: #eda845;
-  border-color: #eda845;
+  background: var(--amber-300);
+  border-color: var(--amber-300);
 }
 .btn--ghost {
   background: transparent;
@@ -195,4 +238,42 @@ h3 {
 .btn--ghost:hover {
   background: var(--ink);
   color: #fff;
+}
+/* 矢印付きボタン: グリフが少しだけ進む */
+.btn--arrow::after {
+  content: '→';
+  font-family: var(--font-num);
+  font-weight: 600;
+  transition: transform 160ms var(--ease-out);
+}
+.btn--arrow:hover::after {
+  transform: translateX(3px);
+}
+/* テキストリンク（副導線）: 下線 + 矢印 */
+.tlink {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.03em;
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--amber-200);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+  transition: text-decoration-color 160ms var(--ease-out);
+}
+.tlink::after {
+  content: '→';
+  font-family: var(--font-num);
+  font-weight: 600;
+  color: var(--accent-dark);
+  transition: transform 160ms var(--ease-out);
+}
+.tlink:hover {
+  text-decoration-color: var(--accent);
+}
+.tlink:hover::after {
+  transform: translateX(3px);
 }

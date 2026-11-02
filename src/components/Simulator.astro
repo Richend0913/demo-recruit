@@ -6,7 +6,7 @@ import { simSpec } from '../data/content';
 const { days, drops } = simSpec;
 ---
 
-<section class="section" id="sim">
+<section class="section section--warm" id="sim">
   <div class="container">
     <SectionHead
       label="手取りシミュレータ"
@@ -15,6 +15,7 @@ const { days, drops } = simSpec;
     />
 
     <div class="sim">
+      <p class="sim-tag">ESTIMATE<span>手取り試算シート</span></p>
       <div class="sim-controls">
         <div class="sim-row">
           <label for="days">
@@ -84,16 +85,39 @@ const { days, drops } = simSpec;
 </script>
 
 <style>
+  /* 台帳パネル: 深い墨の面に、紙の文字とアンバーの数字 */
   .sim {
-    border: 1px solid var(--ink);
-    background: var(--paper);
-    padding: 24px;
+    background: var(--ink-deep);
+    color: #ece7db;
+    border-radius: 6px;
+    padding: 28px 24px 32px;
     max-width: 52rem;
+    box-shadow: 14px 14px 0 0 var(--amber-200);
   }
   @media (min-width: 860px) {
     .sim {
-      padding: 40px 44px;
+      padding: 40px 44px 44px;
     }
+  }
+  .sim-tag {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    font-family: var(--font-num);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.28em;
+    color: var(--amber-300);
+    padding-block-end: 18px;
+    border-block-end: 1px solid rgba(236, 231, 219, 0.18);
+    margin-block-end: 26px;
+  }
+  .sim-tag span {
+    font-family: var(--font);
+    font-weight: 700;
+    font-size: 12.5px;
+    letter-spacing: 0.14em;
+    color: #ece7db;
   }
   .sim-controls {
     display: grid;
@@ -115,16 +139,19 @@ const { days, drops } = simSpec;
     margin-block-end: 6px;
   }
   .sim-row label b {
+    font-family: var(--font-num);
+    font-feature-settings: 'tnum' 1;
     font-size: 16px;
-    font-variant-numeric: tabular-nums;
+    font-weight: 500;
   }
   .sim-row label b span {
-    color: var(--accent-dark);
-    font-size: 19px;
+    color: var(--amber-300);
+    font-size: 20px;
+    font-weight: 600;
   }
   .sim-row input[type='range'] {
     width: 100%;
-    accent-color: var(--accent-dark);
+    accent-color: var(--amber-300);
     height: 30px;
     cursor: pointer;
   }
@@ -138,50 +165,52 @@ const { days, drops } = simSpec;
   .ledger th,
   .ledger td {
     padding: 10px 2px;
-    border-block-end: 1px solid var(--line-soft);
+    border-block-end: 1px solid rgba(236, 231, 219, 0.14);
     text-align: left;
     font-weight: 500;
-    color: var(--ink-2);
+    color: #b9b2a2;
   }
   .ledger td {
+    font-family: var(--font-num);
+    font-feature-settings: 'tnum' 1;
     text-align: right;
-    font-variant-numeric: tabular-nums;
     white-space: nowrap;
     padding-inline-start: 16px;
+    color: #ece7db;
   }
   .ledger-total th,
   .ledger-total td {
     border-block-end: 0;
-    border-block-start: 2px solid var(--ink);
-    padding-block-start: 16px;
-    color: var(--ink);
+    border-block-start: 2px solid var(--amber-300);
+    padding-block-start: 18px;
+    color: #f5f1e8;
     font-weight: 700;
     vertical-align: baseline;
   }
   .ledger-total td {
-    font-size: 26px;
-    font-weight: 700;
-    letter-spacing: 0.01em;
-    color: var(--accent-dark);
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--amber-300);
     line-height: 1.2;
   }
   @media (min-width: 860px) {
     .ledger-total td {
-      font-size: 32px;
+      font-size: 40px;
     }
   }
   .taxnote {
     text-align: right;
     font-size: 12px;
-    color: var(--ink-3);
+    color: #9a927f;
     margin-block-start: 8px;
   }
   .sim-note {
     margin-block-start: 22px;
     padding-block-start: 18px;
-    border-block-start: 1px solid var(--line-soft);
+    border-block-start: 1px solid rgba(236, 231, 219, 0.14);
     font-size: 12.5px;
     line-height: 1.85;
-    color: var(--ink-3);
+    color: #9a927f;
   }
 </style>

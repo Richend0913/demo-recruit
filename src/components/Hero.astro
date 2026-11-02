@@ -3,7 +3,7 @@ import Phrases from './Phrases.astro';
 ---
 
 <section class="hero" id="top">
-  <div class="container">
+  <div class="container hero-in">
     <p class="hero-eyebrow">業務委託ドライバー募集（軽貨物）</p>
     <h1 class="hero-title">
       <Phrases text="手取りの現実を、正直にお見せします。" />
@@ -13,6 +13,12 @@ import Phrases from './Phrases.astro';
         text="「月◯万可能！」ではなく、経費を引いた後の手取りをシミュレータで。あなたの稼働に合わせて、いくら残るかを先に確かめてください。未経験・普通免許でOK、同乗研修あり。"
       />
     </p>
+
+    <div class="hero-btns">
+      <a class="btn btn--primary btn--arrow" href="#apply">応募する</a>
+      <a class="tlink" href="#terms">条件を確認する</a>
+      <a class="tlink" href="#sim">シミュレータで手取りを見る</a>
+    </div>
 
     <dl class="hero-specs">
       <div class="spec">
@@ -28,47 +34,92 @@ import Phrases from './Phrases.astro';
         <dd>東京都・神奈川県<small>（架空）</small></dd>
       </div>
     </dl>
-
-    <div class="hero-btns">
-      <a class="btn btn--primary" href="#apply">応募する</a>
-      <a class="btn btn--ghost" href="#terms">条件を確認する</a>
-      <a class="btn btn--ghost" href="#sim">シミュレータで手取りを見る</a>
-    </div>
   </div>
 </section>
 
 <style>
   .hero {
-    padding-block: 72px 80px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(176deg, var(--amber-050) 0%, var(--paper-warm) 58%, #ffffff 100%);
+    padding-block: 72px 84px;
   }
   @media (min-width: 860px) {
     .hero {
-      padding-block: 96px 104px;
+      padding-block: 104px 112px;
     }
   }
+  /* 斜めのトーンウォッシュ（Stripe のメッシュを -5deg に抑えた色面。
+     要素の輪郭が見えないよう、色の立ち上がりは内側で完結させる） */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: -22% -12% auto auto;
+    width: 78%;
+    height: 135%;
+    background: linear-gradient(
+      100deg,
+      rgba(245, 221, 166, 0) 0%,
+      rgba(245, 221, 166, 0) 30%,
+      rgba(245, 221, 166, 0.55) 68%,
+      rgba(237, 168, 69, 0.3) 100%
+    );
+    transform: rotate(-5deg);
+    transform-origin: top right;
+    pointer-events: none;
+  }
+  .hero-in {
+    position: relative;
+    z-index: 1;
+  }
   .hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
     font-size: 13px;
     font-weight: 700;
     letter-spacing: 0.2em;
     color: var(--accent-dark);
-    margin-block-end: 24px;
+    margin-block-end: 28px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    width: 28px;
+    height: 3px;
+    background: var(--accent);
+    flex: none;
   }
   .hero-title {
     font-size: var(--fs-display);
-    line-height: 1.45;
-    max-width: 16em;
+    line-height: 1.34;
+    letter-spacing: -0.01em;
+    max-width: 14em;
+  }
+  @media (min-width: 860px) {
+    .hero-title {
+      line-height: 1.3;
+      letter-spacing: -0.016em;
+    }
   }
   .hero-sub {
-    margin-block-start: 28px;
+    margin-block-start: 30px;
     color: var(--ink-2);
     font-size: var(--fs-lead);
     line-height: 1.85;
     max-width: 38em;
   }
 
+  .hero-btns {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 32px;
+    margin-block-start: 44px;
+  }
+
   .hero-specs {
-    margin-block-start: 48px;
-    border-block-start: 1px solid var(--ink);
+    margin-block-start: 64px;
+    border-block-start: 2px solid var(--ink-deep);
   }
   .spec {
     display: grid;
@@ -76,7 +127,15 @@ import Phrases from './Phrases.astro';
     gap: 16px;
     align-items: baseline;
     padding-block: 14px;
-    border-block-end: 1px solid var(--line-soft);
+    border-block-end: 1px solid rgba(38, 32, 25, 0.12);
+  }
+  @media (min-width: 860px) {
+    /* 縦積みレイアウトでは基線でなく上端で揃える。
+       align-content: start がないと、伸びた行トラックが余白を吸って dd が沈む */
+    .spec {
+      align-items: start;
+      align-content: start;
+    }
   }
   .spec dt {
     font-size: 12.5px;
@@ -87,11 +146,11 @@ import Phrases from './Phrases.astro';
   .spec dd {
     font-size: 19px;
     font-weight: 700;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.01em;
   }
   @media (min-width: 860px) {
     .spec dd {
-      font-size: 21px;
+      font-size: 23px;
     }
   }
   .spec dd small {
@@ -109,15 +168,8 @@ import Phrases from './Phrases.astro';
     }
     .spec {
       grid-template-columns: 1fr;
-      gap: 4px;
-      padding-block: 16px 20px;
+      gap: 6px;
+      padding-block: 18px 22px;
     }
-  }
-
-  .hero-btns {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-block-start: 40px;
   }
 </style>
