@@ -2,6 +2,8 @@
 import SectionHead from './SectionHead.astro';
 import Phrases from './Phrases.astro';
 import { sceneApplicant as a, sceneListRows, sceneCsvLines } from '../data/content';
+
+const base = import.meta.env.BASE_URL;
 ---
 
 <section class="section scene-sec" id="scene">
@@ -13,6 +15,19 @@ import { sceneApplicant as a, sceneListRows, sceneCsvLines } from '../data/conte
     />
 
     <div class="scene">
+        <!-- 土台: 仕事そのものの写真（朝の積み込み）。応募フローはこの上に浮かぶ -->
+        <figure class="sc sc--photo">
+          <img
+            class="photo-img"
+            src={`${base}photo-hero.webp`}
+            alt="朝の配送センターで、軽バンの荷室に段ボールを積み込むドライバー"
+            width="2048"
+            height="1152"
+            loading="eager"
+            decoding="async"
+          />
+        </figure>
+
         <!-- 1. スマホで見る求人 -->
         <figure class="sc sc--phone">
           <figcaption class="sc-cap"><span class="sc-no">01</span>求人を見る（応募者のスマホ）</figcaption>
@@ -193,10 +208,38 @@ import { sceneApplicant as a, sceneListRows, sceneCsvLines } from '../data/conte
     display: grid;
     gap: 44px 24px;
   }
+
+  /* ---------- 写真（シーンの土台） ----------
+     仕事そのものの写真を大きな面で置き、応募フローのパネルが
+     その縁に浮かぶ構図にする。写真が視覚の主役。 */
+  .sc.sc--photo {
+    display: block;
+    z-index: 0;
+    aspect-ratio: 4 / 3;
+  }
+  .photo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* ドライバー（右寄り・顔は上部）を切り抜きで殺さない */
+    object-position: 58% 32%;
+    border-radius: 24px;
+    box-shadow: var(--shadow-lg);
+  }
   @media (min-width: 700px) and (max-width: 1023.98px) {
     .scene {
       grid-template-columns: 320px 1fr;
       align-items: start;
+    }
+    .sc.sc--photo {
+      grid-column: 1 / -1;
+      aspect-ratio: 16 / 8;
+    }
+    .sc--phone {
+      grid-row: 2 / 4;
+    }
+    .sc--mail {
+      grid-column: 2;
     }
     .sc--wide {
       grid-column: 1 / -1;
@@ -207,25 +250,35 @@ import { sceneApplicant as a, sceneListRows, sceneCsvLines } from '../data/conte
       grid-template-columns: repeat(12, 1fr);
       gap: 0 24px;
     }
+    .sc.sc--photo {
+      grid-column: 1 / 10;
+      grid-row: 1;
+      aspect-ratio: 16 / 10;
+    }
     .sc--phone {
       grid-column: 1 / 5;
       grid-row: 1 / 3;
+      /* 写真の左下に重ねて沈める */
+      margin-block-start: 168px;
+      z-index: 3;
     }
     .sc--done {
-      grid-column: 5 / 10;
+      grid-column: 6 / 11;
       grid-row: 1;
-      margin-block-start: 72px;
+      margin-block-start: 56px;
       align-self: start;
+      z-index: 3;
     }
     .sc--done .panel {
       /* 通知パネルが重なる分、完了パネルの下部に余白を確保して本文を守る */
       padding-block-end: 76px;
     }
     .sc--mail {
-      grid-column: 7 / 13;
+      grid-column: 8 / 13;
       grid-row: 2;
-      margin-block-start: -36px;
-      z-index: 3;
+      /* 写真の右下の縁にも食い込ませる */
+      margin-block-start: -48px;
+      z-index: 4;
       align-self: start;
     }
     .sc--mail .panel {

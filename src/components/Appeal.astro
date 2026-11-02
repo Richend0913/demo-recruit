@@ -2,34 +2,81 @@
 import SectionHead from './SectionHead.astro';
 import Phrases from './Phrases.astro';
 import { appealPoints } from '../data/content';
+
+const base = import.meta.env.BASE_URL;
 ---
 
 <section class="section" id="appeal">
   <div class="container">
     <SectionHead label="仕事の魅力" title="良いことも、経費も、先に全部見せます。" />
-    <dl class="points">
-      {
-        appealPoints.map((point) => (
-          <div class="point">
-            <dt>
-              <Phrases text={point.title} />
-            </dt>
-            <dd>
-              <Phrases text={point.body} />
-            </dd>
-          </div>
-        ))
-      }
-    </dl>
+    <div class="appeal-layout">
+      <figure class="appeal-photo">
+        <img
+          src={`${base}photo-portrait.webp`}
+          alt="軽トラックのそばで段ボール箱を抱えて微笑む女性ドライバー"
+          width="1920"
+          height="1280"
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+      <dl class="points">
+        {
+          appealPoints.map((point) => (
+            <div class="point">
+              <dt>
+                <Phrases text={point.title} />
+              </dt>
+              <dd>
+                <Phrases text={point.body} />
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
   </div>
 </section>
 
 <style>
+  /* 働く人の写真を左の柱にし、魅力の各項を右に積む */
+  .appeal-layout {
+    display: grid;
+    gap: 28px;
+  }
+  .appeal-photo {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    aspect-ratio: 16 / 10;
+  }
+  .appeal-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* 顔（右寄り・上部）がモバイルの横切り抜きでも残る位置 */
+    object-position: 62% 18%;
+  }
+  @media (min-width: 1024px) {
+    .appeal-layout {
+      grid-template-columns: 400px 1fr;
+      gap: 36px;
+      align-items: stretch;
+    }
+    .appeal-photo {
+      aspect-ratio: auto;
+    }
+    .appeal-photo img {
+      /* 縦長の柱では顔を中心に寄せる */
+      object-position: 62% 22%;
+    }
+  }
   .points {
     display: grid;
     gap: 20px;
+    align-content: start;
   }
-  @media (min-width: 860px) {
+  @media (min-width: 860px) and (max-width: 1023.98px) {
     .points {
       grid-template-columns: 1fr 1fr;
       gap: 24px;
