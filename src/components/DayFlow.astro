@@ -3,7 +3,7 @@ import SectionHead from './SectionHead.astro';
 import Phrases from './Phrases.astro';
 import { daySteps } from '../data/content';
 
-const base = import.meta.env.BASE_URL;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 ---
 
 <section class="section section--warm" id="day">
