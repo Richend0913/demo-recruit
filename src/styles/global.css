@@ -4,7 +4,7 @@
  * - 署名は「全面写真のヒーロー + オレンジの収入バンド + 条件ピル」。
  *   写真の上に特大の白見出しを重ね、直下に白いシートを食い込ませる
  * - ページ地は白、面の区切りはごく淡いウォームグレー。墨はほぼ黒のスレート
- * - アクセントはオレンジ1色（#f97316 系）。グラデーションメッシュは廃止
+ * - アクセントはオレンジ（CTA #fe6200 / 収入バンド #fd841e、カンプ実測）。グラデーションメッシュは廃止
  * - パネルは radius 18px + 二重の柔らかいレイヤーシャドウ
  * - 数字は Inter の tabular。タイポグラフィは離散ステップ（clamp 不使用）
  * - 余白は 4px 倍数、コンテナ 1120px。本文行間 1.75
@@ -22,8 +22,15 @@
   --paper-alt: #faf7f2;
   --paper-warm: #faf7f2;
   --paper-warm-2: #f1ede6;
-  --accent: #f97316;
+  /* カンプ実測: CTA #fe6200 / 収入バンド #fd841e の2トーン（/tmp/fidelity-measured.md） */
+  --accent: #fe6200;
   --accent-dark: #ea580c;
+  --band: #fd841e;
+  --band-ink: #3b1d09;
+  --pill: #fcd3aa;
+  --pill-line: #e0965a;
+  --pill-icon: #dd7b2e;
+  --pill-ink: #1a1614;
   --accent-ink: #ffffff;
   --accent-2: #ea580c;
   --accent-tint: #fff3e8;
@@ -39,7 +46,8 @@
   --w-text: 42rem;
 
   /* タイプスケール（離散ステップ。860px / 1120px で段階を上げる） */
-  --fs-display: 34px;
+  /* 見出し: 文字高 ÷ 画面幅 = 0.067（カンプ実測）→ 390px で文字高 ≈26px */
+  --fs-display: 28px;
   --fs-h2: 26px;
   --fs-h3: 17px;
   --fs-lead: 15.5px;
@@ -225,7 +233,7 @@ h3 {
 .btn--primary {
   background: var(--accent);
   color: var(--accent-ink);
-  box-shadow: 0 10px 24px rgba(249, 115, 22, 0.38);
+  box-shadow: 0 10px 24px rgba(254, 98, 0, 0.36);
 }
 .btn--primary:hover {
   background: var(--accent-dark);

@@ -6,26 +6,31 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 /**
  * 条件ピル。新しい主張は作らず、既存の掲載文（ヒーロー/魅力/条件/スマホ画面）の
  * 部分文字列をそのまま切り出したものだけを使う。
+ * wide = モバイルの2カラムに1行で収まらないもの（行いっぱいに使う）
  */
-const pills: string[] = [
-  '未経験可',
-  '普通免許（AT可）',
-  '同乗研修あり',
-  '掛け持ち・副業も可能',
-  '違約金なし',
-  '週2日〜の稼働も相談OK',
+const pills: { text: string; wide?: boolean }[] = [
+  { text: '未経験可' },
+  { text: '普通免許（AT可）' },
+  { text: '同乗研修あり' },
+  { text: '掛け持ち・副業も可能', wide: true },
+  { text: '違約金なし' },
+  { text: '週2日〜の稼働も相談OK', wide: true },
 ];
 ---
 
 <section class="hero" id="top">
-  <!-- 全面写真 + 上部のスクリムに特大の白見出しを重ねる（カンプD1） -->
+  <!--
+    カンプD1の構図: 写真の空に見出しを載せ、人物はその下・右に立つ。
+    写真はフレーム上端より少し下から始め、上の余白は写真の空の色で地続きにする
+    （見出しが帽子にかからないように）。
+  -->
   <div class="hero-media">
     <img
       class="hero-img"
       src={`${base}photo-driver.webp`}
       alt="朝の住宅街で、軽バンのそばに立つ笑顔のドライバー"
-      width="2048"
-      height="1152"
+      width="1920"
+      height="1280"
       fetchpriority="high"
       decoding="async"
     />
@@ -35,17 +40,19 @@ const pills: string[] = [
       <h1 class="hero-title">
         <Phrases text="手取りの現実を、正直にお見せします。" />
       </h1>
+    </div>
+  </div>
+
+  <!-- 写真に食い込む白いシート: 収入バンド → リード → スペック → 条件ピル → 導線 -->
+  <div class="container hero-sheet-wrap">
+    <div class="hero-sheet">
+      <!-- DOM上はリードが先（読み上げ順は従来どおり）。表示はカンプどおりバンドを先頭に -->
       <p class="hero-sub">
         <Phrases
           text="「月◯万可能！」ではなく、経費を引いた後の手取りをシミュレータで。あなたの稼働に合わせて、いくら残るかを先に確かめてください。未経験・普通免許でOK、同乗研修あり。"
         />
       </p>
-    </div>
-  </div>
 
-  <!-- 写真に食い込む白いシート: 収入バンド → スペック → 条件ピル → 導線 -->
-  <div class="container">
-    <div class="hero-sheet">
       <div class="income">
         <div class="income-top">
           <p class="income-label">手取り目安</p>
@@ -74,7 +81,7 @@ const pills: string[] = [
       </dl>
 
       <ul class="pills">
-        {pills.map((pill) => <li>{pill}</li>)}
+        {pills.map((pill) => <li class:list={{ wide: pill.wide }}>{pill.text}</li>)}
       </ul>
 
       <div class="hero-btns">
@@ -91,183 +98,303 @@ const pills: string[] = [
 </section>
 
 <style>
+  /*
+   * 数値はすべて /tmp/fidelity-measured.md（comp-d1 実測。390px = 1015px, 2.60px/CSSpx）由来。
+   */
   .hero {
     position: relative;
+    /* 写真上端の空（#b3c7da）をスクリム越しに見た色。写真の上の余白をこれで地続きにする */
+    --sky: #b3c7da;
   }
 
   /* ---------- 写真メディア ---------- */
   .hero-media {
     position: relative;
     overflow: hidden;
-    background: #33424f;
+    background: var(--sky);
+    /* モバイル: シートが下 34px（=シート角丸）に食い込む分を含めた高さ */
+    height: 372px;
   }
   .hero-img {
     position: absolute;
-    inset: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* 上 60px は空の延長。帽子の上端が見出し2行目の下に来る位置 */
+    top: 60px;
     width: 100%;
-    height: 100%;
+    height: calc(100% - 60px);
     object-fit: cover;
-    /* モバイル: ドライバーの顔（右上）全体がフレームに収まる位置 */
-    object-position: 88% 30%;
+    /* 人物を右 ~1/3 に（カンプ: 画面幅の 62–93%） */
+    object-position: 92% 0;
+    /* 写真上端を空の色へ溶かす */
+    -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 56px);
+    mask-image: linear-gradient(180deg, transparent 0, #000 56px);
   }
   @media (min-width: 860px) {
+    .hero-media {
+      height: 640px;
+    }
     .hero-img {
-      object-position: 50% 22%;
+      top: 0;
+      height: 100%;
+      object-position: 50% 18%;
+      -webkit-mask-image: none;
+      mask-image: none;
     }
   }
-  /* 見出しの可読性は上部の暗いスクリムで担保する（空が明るい写真のため） */
+  /*
+   * カンプの見出し背後は輝度 ≈150/255 と明るい（スクリムは弱い）。
+   * 可読性は見出し側の濃い縁取り影で取り、スクリムは見出しの帯だけを軽く締める。
+   */
   .hero-scrim {
     position: absolute;
     inset: 0;
-    background:
-      linear-gradient(90deg, rgba(10, 18, 26, 0.34) 0%, rgba(10, 18, 26, 0) 58%),
-      linear-gradient(
-        180deg,
-        rgba(10, 18, 26, 0.68) 0%,
-        rgba(10, 18, 26, 0.4) 32%,
-        rgba(10, 18, 26, 0.06) 58%,
-        rgba(10, 18, 26, 0.22) 100%
-      );
+    background: linear-gradient(
+      180deg,
+      rgba(16, 26, 38, 0.5) 0%,
+      rgba(16, 26, 38, 0.36) 30%,
+      rgba(16, 26, 38, 0.08) 52%,
+      rgba(16, 26, 38, 0) 70%,
+      rgba(16, 26, 38, 0.14) 100%
+    );
+  }
+  @media (min-width: 860px) {
+    .hero-scrim {
+      background:
+        linear-gradient(90deg, rgba(16, 26, 38, 0.34) 0%, rgba(16, 26, 38, 0) 55%),
+        linear-gradient(
+          180deg,
+          rgba(16, 26, 38, 0.42) 0%,
+          rgba(16, 26, 38, 0.2) 45%,
+          rgba(16, 26, 38, 0) 70%,
+          rgba(16, 26, 38, 0.16) 100%
+        );
+    }
   }
   .hero-copy {
     position: relative;
     z-index: 1;
-    padding-block: 52px 168px;
+    height: 100%;
   }
-  @media (min-width: 860px) {
-    .hero-copy {
-      padding-block: 80px 208px;
-    }
-  }
+
+  /* ブランドチップ: 写真の左上に密着するタブ（白地 + 下辺と右斜辺のオレンジ線） */
   .hero-eyebrow {
+    position: absolute;
+    top: 0;
+    left: 0;
     display: inline-flex;
     align-items: center;
-    gap: 9px;
+    gap: 8px;
     font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    line-height: 1.4;
     color: var(--ink);
     background: #fff;
-    border-radius: 999px;
-    padding: 7px 15px;
-    box-shadow: var(--shadow-md);
-    margin-block-end: 28px;
+    border-bottom: 4px solid var(--band);
+    border-right: 4px solid var(--band);
+    border-bottom-right-radius: 22px;
+    padding: 9px 20px 8px 16px;
+    box-shadow: 0 6px 18px rgba(16, 26, 38, 0.18);
   }
   .hero-eyebrow::before {
     content: '';
     width: 10px;
     height: 10px;
     border-radius: 3px;
-    background: var(--accent);
+    background: var(--band);
     flex: none;
   }
+  @media (min-width: 860px) {
+    .hero-eyebrow {
+      left: 32px;
+      font-size: 14px;
+      padding: 12px 26px 10px 20px;
+      border-bottom-left-radius: 0;
+    }
+  }
+
+  /*
+   * 見出し: 文字高 ÷ 画面幅 = 0.067（390px で文字高 ≈26px）。
+   * 開始位置は写真上端から 17%。詰め組み（字送り ≈ 文字高の 0.8 倍 → palt + 負の字間）。
+   */
   .hero-title {
+    position: absolute;
+    left: 20px;
+    right: 14px;
+    top: 66px;
     color: #fff;
     font-weight: 900;
     font-size: var(--fs-display);
-    line-height: 1.22;
-    letter-spacing: -0.02em;
-    max-width: 13em;
+    line-height: 1.3;
+    letter-spacing: -0.035em;
+    /* カンプの濃い縁取り + 落ち影 */
     text-shadow:
-      0 2px 30px rgba(10, 18, 26, 0.5),
-      0 1px 3px rgba(10, 18, 26, 0.4);
+      0 0 1px rgba(10, 18, 26, 0.9),
+      0 1px 2px rgba(10, 18, 26, 0.75),
+      0 2px 0 rgba(10, 18, 26, 0.45),
+      0 4px 18px rgba(10, 18, 26, 0.45);
   }
   @media (min-width: 860px) {
     .hero-title {
-      line-height: 1.18;
+      left: 32px;
+      right: auto;
+      top: 120px;
+      max-width: 11em;
+      line-height: 1.22;
+      text-shadow:
+        0 0 1px rgba(10, 18, 26, 0.7),
+        0 2px 3px rgba(10, 18, 26, 0.5),
+        0 4px 28px rgba(10, 18, 26, 0.45);
     }
-  }
-  .hero-sub {
-    margin-block-start: 24px;
-    color: rgba(255, 255, 255, 0.97);
-    font-size: var(--fs-lead);
-    font-weight: 500;
-    line-height: 1.85;
-    max-width: 36em;
-    text-shadow: 0 1px 16px rgba(10, 18, 26, 0.55);
   }
 
   /* ---------- 白いシート ---------- */
+  /* モバイル: シートは画面いっぱい（カンプの左右マージン 0）、上角 r=34px */
+  .hero-sheet-wrap {
+    padding-inline: 0;
+  }
   .hero-sheet {
     position: relative;
     z-index: 2;
-    margin-block-start: -104px;
+    margin-block-start: -34px;
     background: var(--paper);
-    border: 1px solid var(--line);
-    border-radius: 24px;
-    box-shadow: var(--shadow-lg);
-    padding: 22px 20px 28px;
+    border-radius: 34px 34px 0 0;
+    box-shadow: 0 -10px 30px -12px rgba(16, 26, 38, 0.22);
+    /* 上 15px（実測）、左右 20px = バンドの横マージン 5% */
+    padding: 15px 20px 32px;
+    display: flex;
+    flex-direction: column;
   }
   @media (min-width: 860px) {
+    .hero-sheet-wrap {
+      padding-inline: 32px;
+    }
     .hero-sheet {
-      margin-block-start: -128px;
-      padding: 30px 36px 36px;
+      margin-block-start: -150px;
+      border-radius: 34px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-lg);
+      /* バンドの横マージン = シート幅の 5%（実測比） */
+      padding: 26px 5% 40px;
     }
   }
 
-  /* オレンジの収入バンド（カンプD1の署名） */
-  .income {
-    background: linear-gradient(120deg, #ff8a3d 0%, var(--accent) 55%, #fb6a0a 100%);
-    border-radius: 18px;
-    color: #fff;
-    padding: 22px 24px;
-    box-shadow: 0 16px 32px rgba(249, 115, 22, 0.32);
+  /*
+   * 表示順はカンプどおり「バンド → 条件ピル」を隣接させ、その後にリード → スペック → 導線。
+   * DOM 順（読み上げ順）は従来のまま。並べ替える要素にフォーカス可能なものは無い。
+   */
+  .hero-sub {
+    order: 2;
+    margin-block-start: 22px;
+    color: var(--ink-2);
+    font-size: 14.5px;
+    font-weight: 500;
+    line-height: 1.85;
   }
   @media (min-width: 860px) {
-    .income {
-      padding: 26px 32px;
+    .hero-sub {
+      font-size: var(--fs-lead);
+      margin-block-start: 22px;
     }
+  }
+  .income {
+    order: 0;
+  }
+  .pills {
+    order: 1;
+  }
+  .hero-specs,
+  .hero-btns {
+    order: 3;
+  }
+
+  /*
+   * 収入バンド: #fd841e、r = 帯幅の 3.2%（390px で 11px）。
+   * 数字の文字高 = 画面幅の 0.116（390px で ≈45px → Inter 800 で 62px）。
+   */
+  .income {
+    background: var(--band);
+    border-radius: 11px;
+    color: #fff;
+    padding: 14px 15px 15px;
+    box-shadow: 0 14px 28px -10px rgba(253, 132, 30, 0.55);
   }
   .income-top {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 10px 20px;
+    gap: 0 10px;
+  }
+  /* <p> を透過させ、ラベル + 税引前注記を1行目、数字を2行目に（DOM 順は不変） */
+  .income-fig {
+    display: contents;
   }
   .income-label {
-    font-size: 14px;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    background: rgba(255, 255, 255, 0.24);
-    border-radius: 999px;
-    padding: 5px 14px;
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: 0.02em;
+    line-height: 1.3;
     white-space: nowrap;
-  }
-  .income-fig {
-    display: flex;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 4px 10px;
-    font-weight: 800;
-    line-height: 1.1;
-  }
-  .income-fig .num {
-    font-size: 46px;
-    font-weight: 800;
-    letter-spacing: -0.01em;
-    text-shadow: 0 2px 14px rgba(160, 60, 0, 0.35);
-  }
-  @media (min-width: 860px) {
-    .income-fig .num {
-      font-size: 62px;
-    }
+    text-shadow: 0 1px 2px rgba(150, 60, 0, 0.35);
   }
   .income-fig small {
-    font-size: 15px;
+    grid-row: 1;
+    grid-column: 2;
+    font-size: 13px;
     font-weight: 700;
     white-space: nowrap;
   }
+  .income-fig .num {
+    grid-row: 2;
+    grid-column: 1 / -1;
+    font-size: 62px;
+    font-weight: 800;
+    line-height: 1.04;
+    letter-spacing: -0.025em;
+    text-shadow: 0 2px 10px rgba(150, 60, 0, 0.32);
+  }
   .income-note {
-    margin-block-start: 12px;
-    font-size: 12.5px;
-    line-height: 1.75;
-    color: rgba(255, 255, 255, 0.95);
+    margin-block-start: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.7;
+    letter-spacing: 0;
+    color: var(--band-ink);
+  }
+  @media (min-width: 860px) {
+    .income {
+      /* 縦の内訳（実測）: 上 15.6% / 数字 45% / 間 12% / 注記 11% / 下 16.7% */
+      padding: 16px 32px 18px;
+    }
+    .income-top {
+      display: flex;
+      align-items: baseline;
+      gap: 0 18px;
+    }
+    .income-label {
+      font-size: 30px;
+    }
+    .income-fig .num {
+      order: 0;
+      font-size: 88px;
+      line-height: 1;
+    }
+    .income-fig small {
+      order: 1;
+      font-size: 16px;
+    }
+    .income-note {
+      margin-block-start: 10px;
+      font-size: 14px;
+    }
   }
 
   /* スペックはシート内の静かな行として置く */
   .hero-specs {
-    margin-block-start: 26px;
-    padding-block-start: 22px;
+    margin-block-start: 24px;
+    padding-block-start: 20px;
     border-block-start: 1px solid var(--line-soft);
     display: grid;
     gap: 16px;
@@ -325,40 +452,63 @@ const pills: string[] = [
     }
   }
 
-  /* 条件ピル: オレンジの淡地 + チェック。幅は内容に合わせ、語の途中で割らない */
+  /*
+   * 条件ピル（実測）: 2カラム、高さ 44px、完全なピル形、淡色 #fcd3aa、
+   * 枠 #e0965a、列間 15px、アイコンは輪郭線の円 22px、アイコン→文字 8px。
+   * 1行に収まらないものは行いっぱい（dense で空きを詰める。DOM 順は不変）。
+   */
   .pills {
     list-style: none;
-    margin-block-start: 24px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+    margin-block-start: 18px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-flow: row dense;
+    gap: 10px 15px;
   }
   .pills li {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    gap: 9px;
-    background: var(--accent-tint);
-    border: 1px solid var(--accent-line);
+    gap: 8px;
+    min-height: 44px;
+    background: var(--pill);
+    border: 1.5px solid var(--pill-line);
     border-radius: 999px;
-    padding: 9px 16px 9px 11px;
-    font-size: 13.5px;
+    padding: 6px 14px 6px 10px;
+    color: var(--pill-ink);
+    font-size: 14.5px;
     font-weight: 700;
-    letter-spacing: 0.02em;
-    line-height: 1.5;
+    letter-spacing: 0;
+    line-height: 1.35;
     white-space: nowrap;
   }
+  .pills li.wide {
+    grid-column: 1 / -1;
+  }
   .pills li::before {
-    content: '✓';
-    display: grid;
-    place-items: center;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: var(--accent);
-    color: #fff;
-    font-size: 12px;
-    font-weight: 800;
+    content: '';
+    width: 22px;
+    height: 22px;
     flex: none;
+    border-radius: 50%;
+    border: 1.5px solid var(--pill-icon);
+    background: center / 12px 12px no-repeat
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'><path d='M2.2 6.3 4.8 8.8 9.8 3.4' fill='none' stroke='%23dd7b2e' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  }
+  @media (min-width: 860px) {
+    .pills {
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-flow: row;
+      gap: 12px 15px;
+      margin-block-start: 24px;
+    }
+    .pills li.wide {
+      grid-column: auto;
+    }
+    .pills li {
+      min-height: 48px;
+      font-size: 15px;
+      padding-inline: 12px 18px;
+    }
   }
 
   .hero-btns {
@@ -371,6 +521,9 @@ const pills: string[] = [
   @media (max-width: 559.98px) {
     .hero-btns .btn {
       width: 100%;
+      /* カンプ CTA: 高さ 59px */
+      min-height: 58px;
+      font-size: 17px;
     }
   }
 </style>
