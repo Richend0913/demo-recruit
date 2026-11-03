@@ -112,8 +112,8 @@ const pills: { text: string; wide?: boolean }[] = [
     position: relative;
     overflow: hidden;
     background: var(--sky);
-    /* モバイル: シートが下 34px（=シート角丸）に食い込む分を含めた高さ */
-    height: 372px;
+    /* モバイル: シートが下 34px（=シート角丸）に食い込む分を含めた高さ（モバイルカンプ追随で拡大） */
+    height: 470px;
   }
   .hero-img {
     position: absolute;
@@ -223,7 +223,7 @@ const pills: { text: string; wide?: boolean }[] = [
     position: absolute;
     left: 20px;
     right: 14px;
-    top: 66px;
+    top: 92px;
     color: #fff;
     font-weight: 900;
     font-size: var(--fs-display);
@@ -247,6 +247,12 @@ const pills: { text: string; wide?: boolean }[] = [
         0 0 1px rgba(10, 18, 26, 0.7),
         0 2px 3px rgba(10, 18, 26, 0.5),
         0 4px 28px rgba(10, 18, 26, 0.45);
+    }
+  }
+
+  @media (max-width: 859px) {
+    .hero-title {
+      font-size: 43px;
     }
   }
 
@@ -391,6 +397,17 @@ const pills: { text: string; wide?: boolean }[] = [
     }
   }
 
+  /* モバイル: 収入バンドはシートの左右 padding 20px を打ち消してフルブリード */
+  @media (max-width: 859px) {
+    .income {
+      margin-inline: -20px;
+      border-radius: 0;
+      padding-inline: 20px;
+      /* 下に重なるピルパネル（-20px）の分だけ下 padding を足し、注記の最終行に被らせない */
+      padding-block-end: 35px;
+    }
+  }
+
   /* スペックはシート内の静かな行として置く */
   .hero-specs {
     margin-block-start: 24px;
@@ -493,6 +510,21 @@ const pills: { text: string; wide?: boolean }[] = [
     border: 1.5px solid var(--pill-icon);
     background: center / 12px 12px no-repeat
       url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'><path d='M2.2 6.3 4.8 8.8 9.8 3.4' fill='none' stroke='%23dd7b2e' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  }
+  /* モバイル: 条件ピルはバンド下端に重なる白パネル */
+  @media (max-width: 859px) {
+    .pills {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 12px 28px -12px rgba(16, 26, 38, 0.28);
+      padding: 14px;
+      margin-block-start: -20px;
+      position: relative;
+      z-index: 3;
+    }
+    .pills li {
+      background: #f7f3ed;
+    }
   }
   @media (min-width: 860px) {
     .pills {
