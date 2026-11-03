@@ -270,9 +270,11 @@ import Phrases from './Phrases.astro';
 
 <script>
   /**
-   * 応募フォーム送信（formsubmit.co 経由で info@mimoria.jp へ）。
-   * 初回送信時に formsubmit から有効化メールが届くので、一度だけリンクをクリックして有効化すること。
-   * 自動返信（_autoresponse）も有効化後に機能する。
+   * 応募フォーム送信。
+   * 主経路: mimoria-forms Worker（KV保存）へ {lp, fields} を POST。
+   * 副経路: 主経路が失敗（通信エラー / 非2xx）した場合のみ formsubmit.co 経由で info@mimoria.jp へ。
+   * 副経路は初回送信時に formsubmit から有効化メールが届くので、一度だけリンクをクリックして有効化すること。
+   * 副経路の自動返信（_autoresponse）も有効化後に機能する。
    */
   declare global {
     interface Window {
@@ -331,15 +333,24 @@ import Phrases from './Phrases.astro';
       };
       btn.disabled = true;
       btn.textContent = '送信中…';
-      fetch('https://formsubmit.co/ajax/info@mimoria.jp', {
+      fetch('https://mimoria-forms.burningbros.workers.dev/v1/form', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ lp: 'demo-recruit', fields: { ...data, _honey: val('f-honey') } }),
       })
         .then((res) => {
           if (!res.ok) throw new Error('HTTP ' + res.status);
-          return res.json();
         })
+        .catch(() =>
+          fetch('https://formsubmit.co/ajax/info@mimoria.jp', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify(data),
+          }).then((res) => {
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            return res.json();
+          }),
+        )
         .then(() => {
           if (window.gtag) window.gtag('event', 'generate_lead', { method: 'apply' });
           showDone();
