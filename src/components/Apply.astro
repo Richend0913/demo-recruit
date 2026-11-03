@@ -4,7 +4,6 @@ import Phrases from './Phrases.astro';
 ---
 
 <section class="section apply-sec" id="apply" style="scroll-margin-top:60px">
-  <div class="mesh" aria-hidden="true"></div>
   <div class="container apply-in">
     <SectionHead
       label="応募・お問い合わせ"
@@ -51,11 +50,12 @@ import Phrases from './Phrases.astro';
 </section>
 
 <style>
-  /* 応募は署名メッシュのバンドにし、白いフォームカードを浮かべる */
+  /* 応募はオレンジのバンドにし、白いフォームカードを浮かべる */
   .apply-sec {
     position: relative;
     overflow: hidden;
     padding-block-end: 120px;
+    background: linear-gradient(165deg, #ff8f3f 0%, var(--accent) 52%, #f2660d 100%);
   }
   .apply-in {
     position: relative;
@@ -65,9 +65,12 @@ import Phrases from './Phrases.astro';
   #apply :global(.section-label) {
     color: #fff;
   }
+  #apply :global(.section-label)::before {
+    background: #fff;
+  }
   #apply :global(.section-head h2) {
     color: #fff;
-    text-shadow: 0 2px 24px rgba(38, 18, 120, 0.25);
+    text-shadow: 0 2px 24px rgba(146, 64, 0, 0.3);
   }
   #apply :global(.lead) {
     color: rgba(255, 255, 255, 0.94);
@@ -121,7 +124,7 @@ import Phrases from './Phrases.astro';
   .fld textarea:focus {
     outline: none;
     border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(83, 58, 253, 0.22);
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.28);
   }
   .submit {
     width: 100%;

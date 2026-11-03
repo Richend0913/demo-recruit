@@ -1,79 +1,165 @@
 ---
 import Phrases from './Phrases.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+
+/**
+ * 条件ピル。新しい主張は作らず、既存の掲載文（ヒーロー/魅力/条件/スマホ画面）の
+ * 部分文字列をそのまま切り出したものだけを使う。
+ */
+const pills: string[] = [
+  '未経験可',
+  '普通免許（AT可）',
+  '同乗研修あり',
+  '掛け持ち・副業も可能',
+  '違約金なし',
+  '週2日〜の稼働も相談OK',
+];
 ---
 
 <section class="hero" id="top">
-  <div class="mesh" aria-hidden="true"></div>
-  <div class="container hero-in">
-    <p class="hero-eyebrow">業務委託ドライバー募集（軽貨物）</p>
-    <h1 class="hero-title">
-      <Phrases text="手取りの現実を、正直にお見せします。" />
-    </h1>
-    <p class="hero-sub">
-      <Phrases
-        text="「月◯万可能！」ではなく、経費を引いた後の手取りをシミュレータで。あなたの稼働に合わせて、いくら残るかを先に確かめてください。未経験・普通免許でOK、同乗研修あり。"
-      />
-    </p>
-
-    <div class="hero-btns">
-      <a
-        class="btn btn--white btn--arrow"
-        href="#apply"
-        onclick="gtag('event','generate_lead',{method:'apply'})">応募する</a
-      >
-      <a class="tlink tlink--light" href="#terms">条件を確認する</a>
-      <a class="tlink tlink--light" href="#sim">シミュレータで手取りを見る</a>
+  <!-- 全面写真 + 上部のスクリムに特大の白見出しを重ねる（カンプD1） -->
+  <div class="hero-media">
+    <img
+      class="hero-img"
+      src={`${base}photo-driver.webp`}
+      alt="朝の住宅街で、軽バンのそばに立つ笑顔のドライバー"
+      width="2048"
+      height="1152"
+      fetchpriority="high"
+      decoding="async"
+    />
+    <div class="hero-scrim" aria-hidden="true"></div>
+    <div class="container hero-copy">
+      <p class="hero-eyebrow">業務委託ドライバー募集（軽貨物）</p>
+      <h1 class="hero-title">
+        <Phrases text="手取りの現実を、正直にお見せします。" />
+      </h1>
+      <p class="hero-sub">
+        <Phrases
+          text="「月◯万可能！」ではなく、経費を引いた後の手取りをシミュレータで。あなたの稼働に合わせて、いくら残るかを先に確かめてください。未経験・普通免許でOK、同乗研修あり。"
+        />
+      </p>
     </div>
+  </div>
 
-    <dl class="hero-specs">
-      <div class="spec">
-        <dt>職種</dt>
-        <dd>軽貨物ドライバー<small>（業務委託）</small></dd>
+  <!-- 写真に食い込む白いシート: 収入バンド → スペック → 条件ピル → 導線 -->
+  <div class="container">
+    <div class="hero-sheet">
+      <div class="income">
+        <div class="income-top">
+          <p class="income-label">手取り目安</p>
+          <p class="income-fig"><span class="num">¥283,000</span><small>（月・税引前）</small></p>
+        </div>
+        <p class="income-note">
+          <Phrases
+            text="月22日稼働・1日120件・1件150円（サンプル）で試算。売上から車両リース・ガソリン・保険・手数料を引いた額です。"
+          />
+        </p>
       </div>
-      <div class="spec">
-        <dt>報酬</dt>
-        <dd>1配達 150円〜<small>（完全出来高・手取り目安は試算で）</small></dd>
+
+      <dl class="hero-specs">
+        <div class="spec">
+          <dt>職種</dt>
+          <dd>軽貨物ドライバー<small>（業務委託）</small></dd>
+        </div>
+        <div class="spec">
+          <dt>報酬</dt>
+          <dd>1配達 150円〜<small>（完全出来高・手取り目安は試算で）</small></dd>
+        </div>
+        <div class="spec">
+          <dt>勤務地</dt>
+          <dd>東京都・神奈川県<small>（架空）</small></dd>
+        </div>
+      </dl>
+
+      <ul class="pills">
+        {pills.map((pill) => <li>{pill}</li>)}
+      </ul>
+
+      <div class="hero-btns">
+        <a
+          class="btn btn--primary btn--arrow"
+          href="#apply"
+          onclick="gtag('event','generate_lead',{method:'apply'})">応募する</a
+        >
+        <a class="tlink" href="#terms">条件を確認する</a>
+        <a class="tlink" href="#sim">シミュレータで手取りを見る</a>
       </div>
-      <div class="spec">
-        <dt>勤務地</dt>
-        <dd>東京都・神奈川県<small>（架空）</small></dd>
-      </div>
-    </dl>
+    </div>
   </div>
 </section>
 
 <style>
-  /* 署名メッシュの上に白のディスプレイを置く。
-     下端はシーンのパネルが重なるため、余白を深めに取る */
   .hero {
     position: relative;
+  }
+
+  /* ---------- 写真メディア ---------- */
+  .hero-media {
+    position: relative;
     overflow: hidden;
-    padding-block: 56px 132px;
+    background: #33424f;
+  }
+  .hero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* モバイル: ドライバーの顔（右上）全体がフレームに収まる位置 */
+    object-position: 88% 30%;
   }
   @media (min-width: 860px) {
-    .hero {
-      padding-block: 84px 168px;
+    .hero-img {
+      object-position: 50% 22%;
     }
   }
-  .hero-in {
+  /* 見出しの可読性は上部の暗いスクリムで担保する（空が明るい写真のため） */
+  .hero-scrim {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, rgba(10, 18, 26, 0.34) 0%, rgba(10, 18, 26, 0) 58%),
+      linear-gradient(
+        180deg,
+        rgba(10, 18, 26, 0.68) 0%,
+        rgba(10, 18, 26, 0.4) 32%,
+        rgba(10, 18, 26, 0.06) 58%,
+        rgba(10, 18, 26, 0.22) 100%
+      );
+  }
+  .hero-copy {
     position: relative;
     z-index: 1;
+    padding-block: 52px 168px;
+  }
+  @media (min-width: 860px) {
+    .hero-copy {
+      padding-block: 80px 208px;
+    }
   }
   .hero-eyebrow {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
+    gap: 9px;
     font-size: 12px;
     font-weight: 700;
-    letter-spacing: 0.14em;
-    color: #fff;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    background: rgba(255, 255, 255, 0.14);
+    letter-spacing: 0.12em;
+    color: var(--ink);
+    background: #fff;
     border-radius: 999px;
-    padding: 6px 14px;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    margin-block-end: 30px;
+    padding: 7px 15px;
+    box-shadow: var(--shadow-md);
+    margin-block-end: 28px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    background: var(--accent);
+    flex: none;
   }
   .hero-title {
     color: #fff;
@@ -82,7 +168,9 @@ import Phrases from './Phrases.astro';
     line-height: 1.22;
     letter-spacing: -0.02em;
     max-width: 13em;
-    text-shadow: 0 2px 28px rgba(38, 18, 120, 0.28);
+    text-shadow:
+      0 2px 30px rgba(10, 18, 26, 0.5),
+      0 1px 3px rgba(10, 18, 26, 0.4);
   }
   @media (min-width: 860px) {
     .hero-title {
@@ -90,40 +178,104 @@ import Phrases from './Phrases.astro';
     }
   }
   .hero-sub {
-    margin-block-start: 26px;
-    color: rgba(255, 255, 255, 0.94);
+    margin-block-start: 24px;
+    color: rgba(255, 255, 255, 0.97);
     font-size: var(--fs-lead);
     font-weight: 500;
     line-height: 1.85;
-    max-width: 38em;
+    max-width: 36em;
+    text-shadow: 0 1px 16px rgba(10, 18, 26, 0.55);
   }
 
-  .hero-btns {
+  /* ---------- 白いシート ---------- */
+  .hero-sheet {
+    position: relative;
+    z-index: 2;
+    margin-block-start: -104px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    box-shadow: var(--shadow-lg);
+    padding: 22px 20px 28px;
+  }
+  @media (min-width: 860px) {
+    .hero-sheet {
+      margin-block-start: -128px;
+      padding: 30px 36px 36px;
+    }
+  }
+
+  /* オレンジの収入バンド（カンプD1の署名） */
+  .income {
+    background: linear-gradient(120deg, #ff8a3d 0%, var(--accent) 55%, #fb6a0a 100%);
+    border-radius: 18px;
+    color: #fff;
+    padding: 22px 24px;
+    box-shadow: 0 16px 32px rgba(249, 115, 22, 0.32);
+  }
+  @media (min-width: 860px) {
+    .income {
+      padding: 26px 32px;
+    }
+  }
+  .income-top {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    gap: 16px 30px;
-    margin-block-start: 38px;
+    flex-wrap: wrap;
+    gap: 10px 20px;
+  }
+  .income-label {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    background: rgba(255, 255, 255, 0.24);
+    border-radius: 999px;
+    padding: 5px 14px;
+    white-space: nowrap;
+  }
+  .income-fig {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 4px 10px;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+  .income-fig .num {
+    font-size: 46px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    text-shadow: 0 2px 14px rgba(160, 60, 0, 0.35);
+  }
+  @media (min-width: 860px) {
+    .income-fig .num {
+      font-size: 62px;
+    }
+  }
+  .income-fig small {
+    font-size: 15px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .income-note {
+    margin-block-start: 12px;
+    font-size: 12.5px;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.95);
   }
 
-  /* スペックはメッシュ上のガラスストリップとして置く */
+  /* スペックはシート内の静かな行として置く */
   .hero-specs {
-    margin-block-start: 52px;
+    margin-block-start: 26px;
+    padding-block-start: 22px;
+    border-block-start: 1px solid var(--line-soft);
     display: grid;
-    gap: 18px;
-    background: rgba(52, 24, 160, 0.18);
-    border: 1px solid rgba(255, 255, 255, 0.45);
-    border-radius: 16px;
-    padding: 20px 22px;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    max-width: 880px;
+    gap: 16px;
   }
   @media (min-width: 860px) {
     .hero-specs {
       grid-template-columns: repeat(3, 1fr);
       gap: 0 32px;
-      padding: 22px 28px;
     }
   }
   .spec {
@@ -143,11 +295,11 @@ import Phrases from './Phrases.astro';
     font-size: 11.5px;
     font-weight: 700;
     letter-spacing: 0.16em;
-    color: rgba(255, 255, 255, 0.75);
+    color: var(--ink-3);
     white-space: nowrap;
   }
   .spec dd {
-    color: #fff;
+    color: var(--ink);
     font-size: 17px;
     font-weight: 800;
     letter-spacing: 0.01em;
@@ -162,7 +314,7 @@ import Phrases from './Phrases.astro';
     display: block;
     font-size: 12px;
     font-weight: 500;
-    color: rgba(255, 255, 255, 0.82);
+    color: var(--ink-2);
     margin-block-start: 2px;
   }
   @media (min-width: 860px) {
@@ -170,6 +322,55 @@ import Phrases from './Phrases.astro';
       display: inline-block;
       margin-block-start: 0;
       margin-inline-start: 6px;
+    }
+  }
+
+  /* 条件ピル: オレンジの淡地 + チェック。幅は内容に合わせ、語の途中で割らない */
+  .pills {
+    list-style: none;
+    margin-block-start: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .pills li {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    background: var(--accent-tint);
+    border: 1px solid var(--accent-line);
+    border-radius: 999px;
+    padding: 9px 16px 9px 11px;
+    font-size: 13.5px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1.5;
+    white-space: nowrap;
+  }
+  .pills li::before {
+    content: '✓';
+    display: grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    flex: none;
+  }
+
+  .hero-btns {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px 28px;
+    margin-block-start: 28px;
+  }
+  @media (max-width: 559.98px) {
+    .hero-btns .btn {
+      width: 100%;
     }
   }
 </style>

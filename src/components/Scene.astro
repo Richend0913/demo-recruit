@@ -187,18 +187,10 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 </section>
 
 <style>
-  /* ヒーローのメッシュにパネル群を重ねる */
+  /* ヒーローのシートに続く通常セクション（重なりはシート側で完結） */
   .scene-sec {
     position: relative;
-    z-index: 2;
-    margin-block-start: -84px;
-    padding-block-start: 0;
     overflow: visible;
-  }
-  @media (min-width: 860px) {
-    .scene-sec {
-      margin-block-start: -104px;
-    }
   }
 
   /* ---------- 構図 ---------- */
@@ -342,7 +334,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
     font-weight: 700;
     font-size: 13.5px;
     letter-spacing: 0.04em;
-    color: var(--accent);
+    color: var(--accent-dark);
   }
 
   /* ---------- スマホ ---------- */
@@ -419,7 +411,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
     border-block-end: 1px solid var(--line-soft);
   }
   .phone-points b {
-    color: var(--accent);
+    color: var(--accent-dark);
     font-size: 15px;
   }
   .phone-note {
@@ -439,24 +431,24 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
     font-weight: 800;
     font-size: 14.5px;
     letter-spacing: 0.05em;
-    box-shadow: 0 10px 22px rgba(83, 58, 253, 0.35);
+    box-shadow: 0 10px 22px rgba(249, 115, 22, 0.38);
   }
   .phone-chat {
     margin-block-start: 16px;
     padding: 12px 14px;
-    background: #f0efff;
+    background: var(--accent-tint);
     border-radius: 12px;
   }
   .phone-chat-name {
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.08em;
-    color: var(--accent);
+    color: var(--accent-dark);
   }
   .phone-chat-body {
     font-size: 12.5px;
     line-height: 1.7;
-    color: #3730a3;
+    color: #9a3412;
     margin-block-start: 4px;
   }
 
@@ -554,7 +546,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
     border: 1px solid var(--line);
     border-radius: 999px;
     padding: 7px 16px;
-    color: var(--accent);
+    color: var(--accent-dark);
     background: var(--accent-tint);
   }
   .list-scroll {

@@ -1,41 +1,33 @@
 /*
  * コスモ軽貨物 採用LP（デモ）— デザインシステム
- * Direction A（2026-11-03 オーナー選定）: Stripe 系の現代的 SaaS 言語。
- * - 署名は多色グラデーションメッシュ（紫/インディゴ/ピンク/オレンジ）。
- *   ヒーローで主役にし、応募バンドとシミュレータのハイライトにだけ反響させる
- * - ページ地は白 + Stripe のライトバンド #f6f9fc。墨は #0a2540
- * - パネルは radius 18px + 二重の柔らかいレイヤーシャドウ（Stripe 実値系）
+ * Design D1（2026-11-03 オーナー選定）: 求人広告系の写真主役デザイン。
+ * - 署名は「全面写真のヒーロー + オレンジの収入バンド + 条件ピル」。
+ *   写真の上に特大の白見出しを重ね、直下に白いシートを食い込ませる
+ * - ページ地は白、面の区切りはごく淡いウォームグレー。墨はほぼ黒のスレート
+ * - アクセントはオレンジ1色（#f97316 系）。グラデーションメッシュは廃止
+ * - パネルは radius 18px + 二重の柔らかいレイヤーシャドウ
  * - 数字は Inter の tabular。タイポグラフィは離散ステップ（clamp 不使用）
  * - 余白は 4px 倍数、コンテナ 1120px。本文行間 1.75
  * - モーションは機能的なものだけ（≤300ms / ease-out / transform・opacity のみ）
  */
 
 :root {
-  --ink: #0a2540;
-  --ink-2: #425466;
-  --ink-3: #8898aa;
-  --ink-deep: #0a2540;
-  --line: #e6ebf1;
-  --line-soft: #eef2f7;
+  --ink: #182430;
+  --ink-2: #49545f;
+  --ink-3: #8b95a1;
+  --ink-deep: #131e29;
+  --line: #e9e5de;
+  --line-soft: #f1ede6;
   --paper: #ffffff;
-  --paper-alt: #f6f9fc;
-  --paper-warm: #f6f9fc;
-  --paper-warm-2: #e6ebf1;
-  --accent: #533afd;
-  --accent-dark: #4430d6;
+  --paper-alt: #faf7f2;
+  --paper-warm: #faf7f2;
+  --paper-warm-2: #f1ede6;
+  --accent: #f97316;
+  --accent-dark: #ea580c;
   --accent-ink: #ffffff;
-  --accent-2: #ff4d8d;
-  --accent-tint: #f6f4ff;
-  /* メッシュの色面（ヒーロー署名） */
-  --mesh-purple: #a960ee;
-  --mesh-indigo: #533afd;
-  --mesh-pink: #ff4d8d;
-  --mesh-orange: #ff8c42;
-  /* 旧エレベーション由来の変数名は新パレットへ読み替え（参照互換） */
-  --amber-050: #f6f4ff;
-  --amber-100: #e9e5ff;
-  --amber-200: #cfc6ff;
-  --amber-300: #7a5cff;
+  --accent-2: #ea580c;
+  --accent-tint: #fff3e8;
+  --accent-line: #ffd9bd;
 
   --font: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans',
     'BIZ UDPGothic', 'Yu Gothic UI', Meiryo, sans-serif;
@@ -57,14 +49,14 @@
 
   --section-pad: 72px;
   --radius: 12px;
-  /* Stripe 系のレイヤーシャドウ */
+  /* 柔らかいレイヤーシャドウ（ウォーム寄りに調整） */
   --shadow-lg:
-    0 30px 60px -12px rgba(50, 50, 93, 0.25),
-    0 18px 36px -18px rgba(0, 0, 0, 0.22);
+    0 30px 60px -12px rgba(64, 42, 10, 0.22),
+    0 18px 36px -18px rgba(24, 20, 12, 0.2);
   --shadow-md:
-    0 15px 35px rgba(50, 50, 93, 0.1),
-    0 5px 15px rgba(0, 0, 0, 0.07);
-  --shadow-sm: 0 8px 24px rgba(50, 50, 93, 0.06);
+    0 15px 35px rgba(64, 42, 10, 0.1),
+    0 5px 15px rgba(24, 20, 12, 0.07);
+  --shadow-sm: 0 8px 24px rgba(64, 42, 10, 0.06);
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
@@ -132,7 +124,7 @@ a {
   color: inherit;
 }
 ::selection {
-  background: #d6ceff;
+  background: #ffd9bd;
 }
 
 /* ---------- レイアウト ---------- */
@@ -154,39 +146,8 @@ a {
 .section--alt {
   background: var(--paper-alt);
 }
-/* 旧「温かい紙」バンドは Stripe ライトバンドへ読み替え */
 .section--warm {
   background: var(--paper-alt);
-}
-
-/* 署名メッシュ（ヒーロー/応募バンド共用）。
-   多色の radial を重ね、下端はページ地へ溶かす */
-.mesh {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-.mesh::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(600px 420px at 12% -6%, rgba(169, 96, 238, 0.85), rgba(169, 96, 238, 0) 62%),
-    radial-gradient(700px 480px at 46% -12%, rgba(83, 58, 253, 0.8), rgba(83, 58, 253, 0) 65%),
-    radial-gradient(640px 460px at 78% -4%, rgba(255, 77, 141, 0.7), rgba(255, 77, 141, 0) 62%),
-    radial-gradient(560px 420px at 102% 6%, rgba(255, 140, 66, 0.75), rgba(255, 140, 66, 0) 60%),
-    linear-gradient(180deg, #6d4bd8 0%, #533afd 34%, rgba(246, 249, 252, 0) 92%);
-}
-.mesh::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 52%, #fff 98%);
-}
-/* 応募バンド用: 下端はライトバンド地へ溶かす */
-.mesh--to-alt::after {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 40%, var(--paper-alt) 97%);
 }
 
 /* ---------- 見出し ---------- */
@@ -215,7 +176,7 @@ h3 {
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.16em;
-  color: var(--accent);
+  color: var(--accent-dark);
   margin-block-end: 16px;
 }
 .section-label::before {
@@ -223,7 +184,7 @@ h3 {
   width: 22px;
   height: 3px;
   border-radius: 2px;
-  background: linear-gradient(90deg, var(--mesh-purple), var(--accent));
+  background: linear-gradient(90deg, #ff8a3d, var(--accent));
   flex: none;
 }
 .section-head h2 {
@@ -264,19 +225,19 @@ h3 {
 .btn--primary {
   background: var(--accent);
   color: var(--accent-ink);
-  box-shadow: 0 10px 24px rgba(83, 58, 253, 0.35);
+  box-shadow: 0 10px 24px rgba(249, 115, 22, 0.38);
 }
 .btn--primary:hover {
   background: var(--accent-dark);
-  box-shadow: 0 14px 30px rgba(83, 58, 253, 0.4);
+  box-shadow: 0 14px 30px rgba(234, 88, 12, 0.42);
 }
 .btn--white {
   background: #fff;
-  color: var(--accent);
-  box-shadow: 0 14px 30px rgba(38, 18, 120, 0.3);
+  color: var(--accent-dark);
+  box-shadow: 0 14px 30px rgba(24, 20, 12, 0.28);
 }
 .btn--white:hover {
-  box-shadow: 0 18px 38px rgba(38, 18, 120, 0.36);
+  box-shadow: 0 18px 38px rgba(24, 20, 12, 0.34);
 }
 .btn--ghost {
   background: transparent;
@@ -306,7 +267,7 @@ h3 {
   letter-spacing: 0.03em;
   color: var(--ink);
   text-decoration: underline;
-  text-decoration-color: #cfc6ff;
+  text-decoration-color: var(--accent-line);
   text-decoration-thickness: 2px;
   text-underline-offset: 6px;
   transition: text-decoration-color 180ms var(--ease-out);
@@ -315,7 +276,7 @@ h3 {
   content: '→';
   font-family: var(--font-num);
   font-weight: 600;
-  color: var(--accent);
+  color: var(--accent-dark);
   transition: transform 180ms var(--ease-out);
 }
 .tlink:hover {
@@ -323,17 +284,6 @@ h3 {
 }
 .tlink:hover::after {
   transform: translateX(3px);
-}
-/* メッシュ上の副導線（白） */
-.tlink--light {
-  color: #fff;
-  text-decoration-color: rgba(255, 255, 255, 0.55);
-}
-.tlink--light::after {
-  color: #fff;
-}
-.tlink--light:hover {
-  text-decoration-color: #fff;
 }
 
 @media (prefers-reduced-motion: reduce) {
